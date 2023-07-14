@@ -1,0 +1,46 @@
+---
+title: 'Lena Mukosey - single work test'
+style: 'work.css'
+layout: 'base.njk'
+---
+{# script: 'work.js' #}
+
+<div id="imagesContainer">
+    {% for image in images %}
+        <img src="{{ image | prefixWithAssetsPath }}" alt="">
+    {% endfor %}
+</div>
+{# <div id="marginDiv"></div> #}
+<div id="drawer">
+    <div class="arrow up">
+        {% include "../assets-inline/svg/arrow.svg" %}
+    </div>
+    <div id="firstline">
+        <div class="arrow prev">
+            {% include "../assets-inline/svg/arrow.svg" %}
+            {% set previousPost = collections.work | getPreviousCollectionItem %}
+            <a tabindex="-1" href="{{ previousPost.url }}"><span tabindex="0"></span></a>
+        </div>
+        <div id="description">
+            <div id="title">
+                {{ title }}
+            </div>
+            <div id="extra">
+                {{ extra }}
+            </div>
+        </div>
+        <div class="arrow next">
+            {% include "../assets-inline/svg/arrow.svg" %}
+            {% set nextPost = collections.work | getNextCollectionItem %}
+            <a tabindex="-1" href="{{ nextPost.url }}"><span tabindex="0"></span></a>
+        </div>
+    </div>
+    
+    <div id="text">
+        {{ text }}
+        <p>
+            {% include "default-footer-content.njk" %}
+        </p>
+    </div>
+</div>
+{# {{ content | safe }} #}

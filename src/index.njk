@@ -1,0 +1,11 @@
+---
+title: 'Lena Mukosey'
+style: 'index.css'
+layout: 'base.njk'
+---
+
+<div class="cardContainer">
+    {% for work in collections.work %}
+        {% include "work-card.njk" %}
+    {% endfor %}
+</div>

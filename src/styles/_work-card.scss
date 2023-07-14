@@ -1,0 +1,52 @@
+@import 'variables';
+
+$maxCardWidth: $desktopWorksListBreakpoint;
+$minCardWidth: 180px;
+$minCardDesktopWidth: 180px;
+$maxCardDesktopWidth: 350px;
+
+.card {
+    position: relative;
+    overflow-wrap: break-word;
+    margin-inline: $textOffsetHorizontal;
+
+    min-width: $minCardWidth;
+    max-width: $maxCardWidth;
+
+    #imageContainer {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+
+        img {
+            width: inherit;
+        }
+    }
+
+    #description {
+
+        #title {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        #extra {
+            margin: 0;
+            font-size: 0.8em;
+            color: #444;;
+        }
+    }
+
+    a {
+        position: static;
+
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    }
+}

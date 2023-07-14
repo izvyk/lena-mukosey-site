@@ -1,0 +1,14 @@
+<div class="card">
+    <div id="imageContainer">
+        <img src="{{ work.data.images[0] | prefixWithAssetsPath }}">
+    </div>
+    <div id="description">
+        <p id="title">
+            {{ work.data.title }}
+        </p>
+        <p id="extra">
+            {{ work.data.title }}
+        </p>
+    </div>
+    <a tabindex="-1" href="{{ work.url }}"><span tabindex="0"></span></a>
+</div>

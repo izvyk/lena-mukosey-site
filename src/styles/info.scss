@@ -1,0 +1,36 @@
+@import 'base';
+@import 'variables';
+@import 'default-header';
+@import 'default-footer-content';
+
+$photoHeight: 80vh;
+
+main {
+    // margin: min($headerHeight, $headerMaxHeight) $textOffsetHorizontal 0;
+    margin-inline: $textOffsetHorizontal;
+    min-height: calc(100vh - $headerHeight - $footerHeight);
+}
+
+p {
+    margin: 0;
+}
+
+#photo {
+    max-width: 100%;
+}
+
+@media (min-width: $desktopWorksListBreakpoint) {
+    main {
+        display: flex;
+        gap: $defaultGap;
+        // flex-wrap: wrap;
+        // justify-content: space-evenly;
+        // align-items: center;
+        // column-gap: 3em;
+    }
+
+    #photo-and-contacts,
+    #text {
+        flex: 1;
+    }
+}

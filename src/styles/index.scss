@@ -1,0 +1,39 @@
+@import 'base';
+@import 'default-header';
+@import 'default-footer-content';
+@import 'work-card';
+
+// main {
+//     margin-top: $headerHeight;
+// }
+
+footer {
+    padding-top: 0;
+}
+
+.cardContainer {
+    position: relative;
+    .card {
+        margin-bottom: $defaultGap;
+    }
+}
+
+@media (min-width: $maxCardWidth) {
+    .cardContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax($minCardDesktopWidth, 1fr));
+        margin-inline: $textOffsetHorizontal;
+        gap: $defaultGap;
+    }
+
+    .card {
+        margin: 0;
+        min-width: $minCardDesktopWidth;
+        max-width: $maxCardDesktopWidth;
+        aspect-ratio: 1;
+
+        &:last-child {
+            margin-right: auto;
+        }
+    }
+}
