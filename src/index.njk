@@ -5,7 +5,7 @@ layout: 'base.njk'
 ---
 
 <div class="cardContainer">
-    {% for work in collections.work %}
+    {% for work in collections.worksSortedRespectingOrder %}
         {% include "work-card.njk" %}
     {% endfor %}
 </div>

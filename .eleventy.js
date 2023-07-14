@@ -66,8 +66,56 @@ module.exports = function (eleventyConfig) {
 //     }
 //   });
 
+  eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
+    const sortedWorks = collectionApi.getFilteredByTag("work").sort((a, b) => b.data.dateEnd - a.data.dateEnd);
+
+    let explicitlyOrderedItems = [];
+    for (let i = 0; i < sortedWorks.length; i++) {
+      if (Object.hasOwn(sortedWorks[i].data, 'order')) {
+        explicitlyOrderedItems.push(sortedWorks.splice(i, 1)[0]);
+      }
+    }
+
+    explicitlyOrderedItems.forEach(i => {
+      if (i.data.order == -1) {
+        sortedWorks.push(i);
+      } else if (i.data.order > 0) {
+        sortedWorks.splice(i.data.order - 1, 0, i);
+      } else if (i.data.order < 0) {
+        sortedWorks.splice(i.data.order + 1, 0, i);
+      } else {
+        sortedWorks.splice(i.data.order, 0, i);
+      }
+    });
+
+    return sortedWorks;
+  });
+
+  // eleventyConfig.addFilter('sortByDateRespectingExplicitOrder', (values) => {
+  //   const sortedValues = [...values].sort((a, b) => { new Date(b.data.dateEnd) - new Date(a.data.dateEnd) });
+
+  //   let explicitlyOrderedItems = [];
+  //   for (let i = 0; i < sortedValues.length; i++) {
+  //     if (Object.hasOwn(sortedValues[i].data, 'order')) {
+  //       explicitlyOrderedItems.push(sortedValues.splice(i, 1)[0]);
+  //     }
+  //   }
+
+  //   explicitlyOrderedItems.forEach(i => sortedValues.splice(i.data.order - 1, 0, i));
+
+  //   sortedValues.forEach(i => console.log(i.data.dateEnd));
+
+  //   return sortedValues;
+  // });
+
   eleventyConfig.addFilter('prefixWithAssetsPath', (path) => {
+    // return '/test/assets/images/' + path;
     return '/assets/images/' + path;
+  });
+
+  eleventyConfig.addFilter('prefixWithStylesPath', (path) => {
+    // return '/test/styles/' + path;
+    return '/styles/' + path;
   });
 
   eleventyConfig.addPassthroughCopy('./src/assets');

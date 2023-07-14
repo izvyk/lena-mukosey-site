@@ -18,7 +18,7 @@ layout: 'base.njk'
     <div id="firstline">
         <div class="arrow prev">
             {% include "../assets-inline/svg/arrow.svg" %}
-            {% set previousPost = collections.work | getPreviousCollectionItem %}
+            {% set previousPost = collections.worksSortedRespectingOrder | getPreviousCollectionItem %}
             <a tabindex="-1" href="{{ previousPost.url }}"><span tabindex="0"></span></a>
         </div>
         <div id="description">
@@ -31,7 +31,7 @@ layout: 'base.njk'
         </div>
         <div class="arrow next">
             {% include "../assets-inline/svg/arrow.svg" %}
-            {% set nextPost = collections.work | getNextCollectionItem %}
+            {% set nextPost = collections.worksSortedRespectingOrder | getNextCollectionItem %}
             <a tabindex="-1" href="{{ nextPost.url }}"><span tabindex="0"></span></a>
         </div>
     </div>
