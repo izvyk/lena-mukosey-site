@@ -16,7 +16,6 @@ footer {
 }
 
 #imagesContainer {
-    top: 0;
     padding-inline: $textOffsetHorizontal;
     height: calc(100vh - max($headerHeight, $headerMinHeight) - $drawerHeight);
     height: calc(100svh - max($headerHeight, $headerMinHeight) - $drawerHeight);
