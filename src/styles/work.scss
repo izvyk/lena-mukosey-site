@@ -102,11 +102,22 @@ footer {
             width: 100%;
             height: 100%;
         }
+
+        &[href=""] {
+            pointer-events: none;
+            & + svg polyline {
+                stroke: #888;
+            }
+        }
     }
 
     svg {
         height: 100%;
         max-width: 100%;
+
+        polyline {
+            stroke-width: 3px;
+        }
     }
 
     &.prev {
