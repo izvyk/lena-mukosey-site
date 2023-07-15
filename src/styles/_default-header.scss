@@ -3,6 +3,7 @@
 $headerHeight: 10vh;
 $headerMaxHeight: 150px;
 $headerMinHeight: 55px;
+$nameFontSize: 30px;
 
 header {
     display: flex;
@@ -23,6 +24,7 @@ header {
     padding-inline: $textOffsetHorizontal;
     // margin: 0 $textOffsetHorizontal;
     background-color: #FFF;
+    font-size: $nameFontSize;
 
     #name {
         font-weight: bold;
