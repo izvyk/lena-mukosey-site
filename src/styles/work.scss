@@ -11,12 +11,6 @@ footer {
     display: none;
 }
 
-img {
-    max-width: 100%;
-    max-height: 70vh;
-    max-height: 70svh;
-}
-
 #imagesContainer {
     top: 0;
     padding-inline: $textOffsetHorizontal;
@@ -24,8 +18,21 @@ img {
     height: calc(100svh - max($headerHeight, $headerMinHeight) - $drawerHeight);
     overflow-y: auto;
     display: flex;
+    align-content: start;
     flex-wrap: wrap;
     gap: $defaultGap;
+
+    picture {
+        max-height: 70vh;
+        max-height: 70svh;
+
+    }
+
+    img {
+        height: 100%;
+        max-height: inherit;
+        max-width: 100%;
+    }
 }
 
 // #marginDiv {
@@ -128,8 +135,16 @@ img {
     }
 
     main {
-        display: flex;
+        display: grid;
+        grid-template-columns: 4fr 3fr;
         gap: $defaultGap;
+    }
+
+    #imagesContainer {
+        position: initial;
+        height: auto;
+        justify-content: end;
+        padding-right: 0;
     }
 
     #drawer {
@@ -137,7 +152,6 @@ img {
         width: initial;
         margin-top: calc(-1 * max($headerHeight, $headerMinHeight));
         margin-right: $textOffsetHorizontal;
-        flex: 3;
 
         #footer-content {
             display: none;
@@ -166,13 +180,5 @@ img {
             }
         }
         
-    }
-
-    #imagesContainer {
-        position: initial;
-        height: fit-content;
-        flex: 4;
-        justify-content: end;
-        padding-right: 0;
     }
 }

@@ -5,7 +5,10 @@ layout: 'base.njk'
 ---
 
 <div class="cardContainer">
-    {% for work in collections.worksSortedRespectingOrder %}
+    {# {% for work in collections.worksSortedRespectingOrder %}
         {% include "work-card.njk" %}
-    {% endfor %}
+    {% endfor %} #}
+    {% asyncEach work in collections.worksSortedRespectingOrder %}
+        {% include "work-card.njk" %}
+    {% endeach %}
 </div>

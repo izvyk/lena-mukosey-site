@@ -3,7 +3,7 @@
 $maxCardWidth: $desktopWorksListBreakpoint;
 $minCardWidth: 180px;
 $minCardDesktopWidth: 180px;
-$maxCardDesktopWidth: 350px;
+$maxCardDesktopWidth: 380px;
 
 .card {
     position: relative;
@@ -13,7 +13,8 @@ $maxCardDesktopWidth: 350px;
     min-width: $minCardWidth;
     max-width: $maxCardWidth;
 
-    #imageContainer {
+    #imageContainer,
+    #imageContainer picture {
         width: 100%;
         aspect-ratio: 4 / 3;
         overflow: hidden;

@@ -1,70 +1,87 @@
 const eleventySass = require('eleventy-sass');
-// const htmlmin = require('html-minifier');
-// const posthtml = require('posthtml');
-// const uglify = require('posthtml-minify-classnames');
-// const { minify } = require("terser");
+const Image = require("@11ty/eleventy-img");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventySass);
 
-  // eleventyConfig.addTransform('htmlmin', async function(content, outputPath) {
-  //   if (outputPath.endsWith('.html')) {
-  //     const { html } = await posthtml().use(uglify()).process(content);
+  // eleventyConfig.addNunjucksAsyncShortcode("imageSingleSize", async function(src, alt) {
+	// 	// if(alt === undefined) {
+	// 	// 	// You bet we throw an error on missing alt (alt="" works okay)
+	// 	// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
+	// 	// }
 
-  //     let minified = htmlmin.minify(html, {
-  //       useShortDoctype: true,
-  //       removeComments: true,
-  //       collapseWhitespace: true
-  //     });
-  //     return minified;
-  //   }
-  //   return content;
-  // });
+	// 	let metadata = await Image("./src/assets/images/" + src, {
+	// 		// widths: [5, 150, 300, 600],
+	// 		formats: ['avif', 'jpeg'],
+  //     outputDir: 'public/assets/images',
+  //     urlPath: '/assets/images',
+  //     svgShortCircuit: true,
+	// 	});
 
-//   eleventyConfig.addFilter('embeddableYoutubeLink', (link) => {
-//     return link.replace('watch?v=', 'embed/');
-//   });
+	// 	let lowsrc = metadata.jpeg[0];
+	// 	// let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+	// 	// 			width="${highsrc.width}"
+	// 	// 			height="${highsrc.height}"
 
-//   eleventyConfig.addFilter('replaceCommasWithWhitespaces', (list) => {
-//     return String(list).replaceAll(',', ' ');
-//   });
+	// 	return `<picture>
+	// 		${Object.values(metadata).map(imageFormat => {
+	// 			return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}">`;
+	// 		}).join("\n")}
+	// 			<img
+	// 				src="${lowsrc.url}"
+	// 				alt="${alt}"
+	// 				loading="lazy"
+	// 				decoding="async">
+	// 		</picture>`;
+	// });
 
-//   eleventyConfig.addFilter('toUpper', (str) => {
-//     return str.toUpperCase();
-//   });
+  eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw") {
+		// if(alt === undefined) {
+		// 	// You bet we throw an error on missing alt (alt="" works okay)
+		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
+		// }
 
-//   eleventyConfig.addFilter("findAll", function findAll(collection = [], names = []) {
-//     let result = [];
-//     names.forEach(name => {
-//       let found = collection.find(project => project.data.title[0].toLowerCase() === name.toLowerCase());
-//       if (found) {
-//         result.push(found);
-//       }
-//     });
-//     return result.length ? result : null;
-//   });
+		let metadata = await Image("./src/assets/images/" + src, {
+			widths,
+			formats: ['avif', 'jpeg'],
+      outputDir: 'public/assets/images',
+      urlPath: '/assets/images',
+      svgShortCircuit: true,
+		});
 
-//   eleventyConfig.addFilter("findByCategory", function find(collection = [], category = "", ...namesToExclude) {
-//     return collection.filter(project => project.data.categories.includes(category) && !namesToExclude.includes(project.data.title[0]));
-//   });
+		let lowsrc = metadata.jpeg[0];
+		// let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+    // width="${highsrc.width}"
+    // height="${highsrc.height}"
 
-//   eleventyConfig.addFilter("keepOnly", function keepOnly(collection = [], number) {
-//     return collection.slice(0, number);
-//   });
-
-//   eleventyConfig.addNunjucksAsyncFilter("jsmin", async function (
-//     code,
-//     callback
-//   ) {
-//     try {
-//       const minified = await minify(code);
-//       callback(null, minified.code);
-//     } catch (err) {
-//       console.error("Terser error: ", err);
-//       // Fail gracefully.
-//       callback(null, code);
-//     }
-//   });
+		// return `<img
+		// 			src="${lowsrc.url}"
+    //       srcset="${imageFormat.map(entry => entry.srcset).join(", ")}"
+    //       sizes="${sizes}"
+		// 			alt="${alt}"
+		// 			loading="lazy"
+		// 			decoding="async">`;
+    return `<picture>
+      ${Object.values(metadata).map(imageFormat => {
+      return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+    }).join("\n")}
+        <img
+          src="${lowsrc.url}"
+          alt="${alt}"
+          loading="lazy"
+          decoding="async">
+      </picture>`;
+      // return `<picture>
+      //   ${Object.values(metadata).map(imageFormat => {
+      //     return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+      //   }).join("\n")}
+      //     <img
+      //       src="${lowsrc.url}"
+      //       alt="${alt}"
+      //       loading="lazy"
+      //       decoding="async">
+      //   </picture>`;
+	});
 
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
     const sortedWorks = collectionApi.getFilteredByTag("work").sort((a, b) => b.data.dateEnd - a.data.dateEnd);
@@ -91,23 +108,6 @@ module.exports = function (eleventyConfig) {
     return sortedWorks;
   });
 
-  // eleventyConfig.addFilter('sortByDateRespectingExplicitOrder', (values) => {
-  //   const sortedValues = [...values].sort((a, b) => { new Date(b.data.dateEnd) - new Date(a.data.dateEnd) });
-
-  //   let explicitlyOrderedItems = [];
-  //   for (let i = 0; i < sortedValues.length; i++) {
-  //     if (Object.hasOwn(sortedValues[i].data, 'order')) {
-  //       explicitlyOrderedItems.push(sortedValues.splice(i, 1)[0]);
-  //     }
-  //   }
-
-  //   explicitlyOrderedItems.forEach(i => sortedValues.splice(i.data.order - 1, 0, i));
-
-  //   sortedValues.forEach(i => console.log(i.data.dateEnd));
-
-  //   return sortedValues;
-  // });
-
   eleventyConfig.addFilter('prefixWithAssetsPath', (path) => {
     // return '/test/assets/images/' + path;
     return '/assets/images/' + path;
@@ -118,7 +118,7 @@ module.exports = function (eleventyConfig) {
     return '/styles/' + path;
   });
 
-  eleventyConfig.addPassthroughCopy('./src/assets');
+  // eleventyConfig.addPassthroughCopy('./src/assets');
 
   return {
     dir: {

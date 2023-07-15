@@ -6,9 +6,18 @@ layout: 'base.njk'
 {# script: 'work.js' #}
 
 <div id="imagesContainer">
-    {% for image in images %}
+    {# {% for image in images %}
         <img src="{{ image | prefixWithAssetsPath }}" alt="">
-    {% endfor %}
+    {% endfor %} #}
+    {% asyncEach image in images %}
+        {% image image,
+            "",
+            [250, 300, 400, 450, 500, 550, 600, 650, 700, 750, 800, 'auto'],
+            "(max-width: 250px) calc(250px - max(5vw,30px)),
+             calc(100vw - max(5vw,30px))
+            "
+        %}
+    {% endeach %}
 </div>
 {# <div id="marginDiv"></div> #}
 <div id="drawer">
@@ -17,9 +26,9 @@ layout: 'base.njk'
     </div>
     <div id="firstline">
         <div class="arrow prev">
-            {% include "../assets-inline/svg/arrow.svg" %}
             {% set previousPost = collections.worksSortedRespectingOrder | getPreviousCollectionItem %}
             <a tabindex="-1" href="{{ previousPost.url }}"><span tabindex="0"></span></a>
+            {% include "../assets-inline/svg/arrow.svg" %}
         </div>
         <div id="description">
             <div id="title">
@@ -30,9 +39,9 @@ layout: 'base.njk'
             </div>
         </div>
         <div class="arrow next">
-            {% include "../assets-inline/svg/arrow.svg" %}
             {% set nextPost = collections.worksSortedRespectingOrder | getNextCollectionItem %}
             <a tabindex="-1" href="{{ nextPost.url }}"><span tabindex="0"></span></a>
+            {% include "../assets-inline/svg/arrow.svg" %}
         </div>
     </div>
     
