@@ -11,6 +11,10 @@ footer {
     display: none;
 }
 
+#text #footer-content {
+    padding-inline: 0;
+}
+
 #imagesContainer {
     top: 0;
     padding-inline: $textOffsetHorizontal;
@@ -58,7 +62,7 @@ footer {
         display: flex;
         height: $drawerHeight;
         align-items: center;
-        padding-inline: $defaultGap;
+        padding-inline: $textOffsetHorizontal;
         font-weight: bold;
 
         #description {
@@ -85,12 +89,6 @@ footer {
     height: 100%;
     box-sizing: border-box;
     position: relative;
-    width: calc($textOffsetHorizontal - 2px);
-    margin-inline: 2px;
-
-    // &:has(> a) {
-    //     background-color: red;
-    // }
 
     a {
         position: static;
