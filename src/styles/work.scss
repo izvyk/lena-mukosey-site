@@ -7,6 +7,11 @@ $drawerHeight: 4em;
 $minDesktopWidth: 700px;
 $arrowDesktopWidth: 20px;
 
+main {
+    // min-height: calc(100vh - $;
+    min-height: calc(100svh - $footerHeight - $headerHeight);
+}
+
 footer {
     display: none;
 }
@@ -17,8 +22,8 @@ footer {
 
 #imagesContainer {
     padding-inline: $textOffsetHorizontal;
-    height: calc(100vh - max($headerHeight, $headerMinHeight) - $drawerHeight);
-    height: calc(100svh - max($headerHeight, $headerMinHeight) - $drawerHeight);
+    height: calc(100vh - $headerHeight - $drawerHeight);
+    height: calc(100svh - $headerHeight - $drawerHeight);
     overflow-y: auto;
     display: flex;
     align-content: start;
@@ -144,38 +149,53 @@ footer {
 
     main {
         display: grid;
-        grid-template-columns: 4fr 3fr;
+        grid-template-columns: auto auto;
         gap: $defaultGap;
     }
 
     #imagesContainer {
         position: initial;
         height: auto;
-        justify-content: end;
-        padding-right: 0;
+        // justify-content: end;
+        padding-left: 0;
         overflow-y: initial;
+        order: 2;
     }
 
     #drawer {
-        position: initial;
-        width: initial;
-        margin-top: calc(-1 * max($headerHeight, $headerMinHeight));
-        margin-right: $textOffsetHorizontal;
+        // font-size: 12px;
+        position: sticky;
+        top: $headerHeight;
+        // position: initial;
+        width: 30ch;
+        // margin-top: calc(-1 * $headerHeight);
+        margin-left: $textOffsetHorizontal;
+        order: 1;
+        height: fit-content;
 
         #footer-content {
             display: none;
         }
 
         #firstline {
-            position: sticky;
-            top: 0;
+            // position: sticky;
+            // top: $headerHeight;
+            // background-color: #fff;
             padding: 0;
-            z-index: 1;
-            height: $headerHeight;
-            margin-left: -$defaultGap - $arrowDesktopWidth;
-            margin-right: - $arrowDesktopWidth;
-            min-height: $headerMinHeight;
+            // z-index: 1;
+            // height: $headerHeight;
+            // margin-left: -$defaultGap - $arrowDesktopWidth;
+            // margin-right: - $arrowDesktopWidth;
+            height: fit-content;
+            margin-left: calc(-1 * $arrowDesktopWidth - $defaultGap / 2);
+            margin-right: 0;
+            // min-height: $headerMinHeight;
+            // max-height: $headerMaxHeight
+            #description {
+                margin-inline: $defaultGap / 2;
+            }
         }
+
 
         #text {
             padding: 0;
