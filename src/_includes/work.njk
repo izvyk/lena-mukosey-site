@@ -3,12 +3,8 @@ title: 'Lena Mukosey - single work test'
 style: 'work.css'
 layout: 'base.njk'
 ---
-{# script: 'work.js' #}
 
 <div id="imagesContainer">
-    {# {% for image in images %}
-        <img src="{{ image | prefixWithAssetsPath }}" alt="">
-    {% endfor %} #}
     {% asyncEach image in images %}
         {% image image,
             "",
@@ -19,16 +15,15 @@ layout: 'base.njk'
         %}
     {% endeach %}
 </div>
-{# <div id="marginDiv"></div> #}
 <div id="drawer">
     <div class="arrow up">
-        {% include "../assets-inline/svg/arrow.svg" %}
+        {% include "../assets-inline/svg/arrow-right.svg" %}
     </div>
     <div id="firstline">
         <div class="arrow prev">
             {% set previousPost = collections.worksSortedRespectingOrder | getPreviousCollectionItem %}
             <a tabindex="-1" href="{{ previousPost.url }}"><span tabindex="0"></span></a>
-            {% include "../assets-inline/svg/arrow.svg" %}
+            {% include "../assets-inline/svg/arrow-left.svg" %}
         </div>
         <div id="description">
             <div id="title">
@@ -41,7 +36,7 @@ layout: 'base.njk'
         <div class="arrow next">
             {% set nextPost = collections.worksSortedRespectingOrder | getNextCollectionItem %}
             <a tabindex="-1" href="{{ nextPost.url }}"><span tabindex="0"></span></a>
-            {% include "../assets-inline/svg/arrow.svg" %}
+            {% include "../assets-inline/svg/arrow-right.svg" %}
         </div>
     </div>
     
@@ -50,4 +45,3 @@ layout: 'base.njk'
         {% include "default-footer-content.njk" %}
     </div>
 </div>
-{# {{ content | safe }} #}

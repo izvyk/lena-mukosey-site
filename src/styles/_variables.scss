@@ -1,5 +1,6 @@
-$textOffsetHorizontal: max(5vw, 30px);
+$textOffsetHorizontalMin: 30px;
+$textOffsetHorizontal: max(5vw, $textOffsetHorizontalMin);
 $defaultGap: 20px;
 $minWidth: 250px;
 $desktopWorksListBreakpoint: 425px;
-$desktopSingleWorkBreakpoint: 600px;
+$desktopSingleWorkBreakpoint: 800px;

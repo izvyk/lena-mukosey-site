@@ -5,10 +5,9 @@
 
 $drawerHeight: 4em;
 $minDesktopWidth: 700px;
-$arrowDesktopWidth: 20px;
+$arrowDesktopWidth: 13px;
 
 main {
-    // min-height: calc(100vh - $;
     min-height: calc(100svh - $footerHeight - $headerHeight);
 }
 
@@ -25,60 +24,56 @@ footer {
     height: calc(100vh - $headerHeight - $drawerHeight);
     height: calc(100svh - $headerHeight - $drawerHeight);
     overflow-y: auto;
-    display: flex;
-    align-content: start;
+    display: grid;
+    // align-content: start;
     flex-wrap: wrap;
     gap: $defaultGap;
 
     picture {
-        max-height: 70vh;
-        max-height: 70svh;
-
+        display: block;
+        max-width: 100%;
+        max-height: calc(100vh - $headerHeight);
+        max-height: calc(100svh - $headerHeight);
     }
 
     img {
         height: 100%;
         max-height: inherit;
-        max-width: 100%;
+        max-width: inherit;
+        object-fit: contain;
     }
 }
 
-// #marginDiv {
-//     // height: 100vh;
-//     // height: -moz-available;
-//     // height: -webkit-fill-available;
-//     // height: fill-available;
-//     // height: stretch;
-//     margin-top: -$drawerHeight;
-//     pointer-events: none;
-// }
-
 #drawer {
     position: relative;
-    // margin-top: calc(100vh - $drawerHeight);
-    // width: 100vw;
-    // min-height: $drawerHeight;
     background-color: white;
-    // margin-top: calc(100vh - $drawerHeight);
-    // margin-ts    op: calc(100svh - $drawerHeight);
     
     #firstline {
         display: flex;
         height: $drawerHeight;
         align-items: center;
         padding-inline: $textOffsetHorizontal;
-        font-weight: bold;
-
+        height: auto;
+        
         #description {
             margin-inline: $defaultGap;
             height: min-content;
             flex: 1;
+            
+            #title {
+                font-weight: bold;
+            }
+
+            #extra {
+                font-size: 14px;
+            }
         }
     }
 
     #text {
         padding-inline: $textOffsetHorizontal;
         overflow: auto;
+        overflow-wrap: break-word;
         line-height: 150%;
         
         @media (max-width: $desktopSingleWorkBreakpoint) {
@@ -123,10 +118,6 @@ footer {
         }
     }
 
-    &.prev {
-        transform: rotate(180deg);
-    }
-
     &.up {
         position: absolute;
         top: calc(-1 * $drawerHeight / 2);
@@ -144,13 +135,21 @@ footer {
 }
 
 @media (min-width: $desktopSingleWorkBreakpoint) {
+    header {
+        padding-inline: $textOffsetHorizontalMin;
+    }
+
     footer {
         display: initial;
     }
 
+    #footer-content {
+        padding-inline: $textOffsetHorizontalMin;
+    }
+
     main {
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: 0fr 1fr;
         gap: $defaultGap;
     }
 
@@ -158,19 +157,26 @@ footer {
         position: initial;
         height: auto;
         // justify-content: end;
-        padding-left: 0;
+        min-height: calc(100vh - 2 * $defaultGap);
+        min-height: calc(100svh - 2 * $defaultGap);
+        padding: 0 $defaultGap 0;
         overflow-y: initial;
         order: 2;
+        margin-top: calc(-1 * $headerHeight + $defaultGap);
+        z-index: 1;
+
+        picture {
+            max-height: calc(100vh - 2 * $defaultGap);
+            max-height: calc(100svh - 2 * $defaultGap);
+            // margin-left: auto;
+        }
     }
 
     #drawer {
-        // font-size: 12px;
         position: sticky;
         top: $headerHeight;
-        // position: initial;
         width: 30ch;
-        // margin-top: calc(-1 * $headerHeight);
-        margin-left: $textOffsetHorizontal;
+        margin-left: $textOffsetHorizontalMin;
         order: 1;
         height: fit-content;
 
@@ -179,36 +185,32 @@ footer {
         }
 
         #firstline {
-            // position: sticky;
-            // top: $headerHeight;
-            // background-color: #fff;
             padding: 0;
-            // z-index: 1;
-            // height: $headerHeight;
-            // margin-left: -$defaultGap - $arrowDesktopWidth;
-            // margin-right: - $arrowDesktopWidth;
-            height: fit-content;
-            margin-left: calc(-1 * $arrowDesktopWidth - $defaultGap / 2);
-            margin-right: 0;
-            // min-height: $headerMinHeight;
-            // max-height: $headerMaxHeight
+            margin: 0;
+            align-items: start;
+
             #description {
-                margin-inline: $defaultGap / 2;
+                margin-inline: calc($defaultGap / 2);
             }
         }
 
 
         #text {
             padding: 0;
+            margin-top: $defaultGap;
+        }
+    }
+
+    .arrow {
+        margin: 0;
+        width: initial;
+        &.up {
+            display: none;
         }
 
-        .arrow {
-            margin: 0;
-            width: initial;
-            &.up {
-                display: none;
-            }
+        a span {
+            margin-left: -$textOffsetHorizontalMin;
+            width: calc($textOffsetHorizontalMin + $arrowDesktopWidth + $defaultGap / 2);
         }
-        
     }
 }

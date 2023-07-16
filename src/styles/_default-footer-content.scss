@@ -7,7 +7,4 @@ $footerHeight: calc(2 * $footerPaddingVertical + $footerFontSize);
 #footer-content {
     padding: $footerPaddingVertical $textOffsetHorizontal;
     font-size: $footerFontSize;
-    text-align: end;
-    // background-color: white;
-    // position: relative;
 }

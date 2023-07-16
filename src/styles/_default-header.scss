@@ -1,9 +1,10 @@
 @import 'variables';
 
-$headerPreferredHeight: 12vh;
 $headerMaxHeight: 150px;
 $headerMinHeight: 55px;
 $nameFontSize: 30px;
+// $headerPreferredHeight: 12vh;
+$headerPreferredHeight: calc(2 * $defaultGap + $nameFontSize);
 
 $headerHeight: clamp($headerMinHeight, $headerPreferredHeight, $headerMaxHeight);
 

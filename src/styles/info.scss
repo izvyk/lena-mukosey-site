@@ -3,8 +3,6 @@
 @import 'default-header';
 @import 'default-footer-content';
 
-$photoHeight: 80vh;
-
 main {
     // margin: min($headerHeight, $headerMaxHeight) $textOffsetHorizontal 0;
     margin-inline: $textOffsetHorizontal;
