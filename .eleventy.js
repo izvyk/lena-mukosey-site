@@ -86,6 +86,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
     const sortedWorks = collectionApi.getFilteredByTag("work").sort((a, b) => b.data.dateEnd - a.data.dateEnd);
 
+    for (let i = 0; i < sortedWorks.length; i++) {
+      if (Object.hasOwn(sortedWorks[i].data, 'display') && 
+      (sortedWorks[i].data.display == false || sortedWorks[i].data.display == 'no')) {
+        sortedWorks.splice(i, 1); 
+      }
+    }
+
     let explicitlyOrderedItems = [];
     for (let i = 0; i < sortedWorks.length; i++) {
       if (Object.hasOwn(sortedWorks[i].data, 'order')) {
