@@ -1,16 +1,18 @@
 @import 'variables';
 
-$headerHeight: 10vh;
+$headerPreferredHeight: 12vh;
 $headerMaxHeight: 150px;
 $headerMinHeight: 55px;
 $nameFontSize: 30px;
+
+$headerHeight: clamp($headerMinHeight, $headerPreferredHeight, $headerMaxHeight);
 
 header {
     display: flex;
     // position: fixed;
     position: sticky;
     top: 0;
-    height: $headerHeight;
+    height: $headerPreferredHeight;
     min-height: $headerMinHeight;
     max-height: $headerMaxHeight;
     box-sizing: border-box;
