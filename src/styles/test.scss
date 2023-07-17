@@ -1,0 +1,94 @@
+@import 'base';
+@import 'default-header';
+@import 'default-footer-content';
+
+$workInfoWidth: 28ch;
+$imagesContainerHeightVH: calc(100vh - 2 * $defaultGap);
+$imagesContainerHeightSVH: calc(100svh - 2 * $defaultGap);
+
+main {
+    margin-top: calc(-1 * $headerHeight);
+}
+
+header,
+#footer-content,
+.workInfo {
+    padding-inline: $defaultGap;
+}
+
+header {
+    // box-shadow: 0 15px 30px #fff;
+    // border-style: solid;
+    // border-image: linear-gradient(transparent, red) 1;
+    // border-width: 0 0 100px 0;
+    // transform: translateY(calc(-1 * $headerHeight));
+    // box-shadow: 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0;
+    // mask-image: linear-gradient(to top, black calc(100% - 48px), transparent 100%);
+    // mask-image: linear-gradient(to top, black, transparent 50px);
+}
+
+.workContainer {
+    display: grid;
+    grid-template-columns: 0fr 1fr;
+}
+
+.workInfo {
+    width: $workInfoWidth;
+    display: block;
+    height: fit-content;
+    position: sticky;
+    margin-top: auto;
+    bottom: $defaultGap;
+    padding-top: $defaultGap;
+
+    .title {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .extra {
+        font-size: 0.9em;
+    }
+}
+
+.imagesContainer {
+    // mask-image: linear-gradient(to top, black, transparent 50px);
+
+    height: fit-content;
+    max-height: $imagesContainerHeightVH;
+    max-height: $imagesContainerHeightSVH;
+
+    // Just a fallback: scrollbar width causes problems
+    max-width: calc(100vw - $workInfoWidth - 4 * $defaultGap);
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+
+
+    margin-top: $defaultGap;
+    margin-right: $defaultGap;
+
+    z-index: 1;
+
+    display: flex;
+    gap: $defaultGap;
+    // overflow-x: auto;
+    overflow-y: hidden;
+
+    picture {
+        // display: inline-block;
+        height: inherit;
+        max-height: inherit;
+        max-width: inherit;
+    }
+
+    img {
+        object-fit: contain;
+        object-position: bottom !important;
+
+        max-height: inherit;
+        max-width: inherit;
+        height: inherit;
+        display: block;
+        // width: inherit;
+    }
+}

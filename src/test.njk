@@ -1,0 +1,60 @@
+---
+title: 'Lena Mukosey'
+style: 'test.css'
+layout: 'base.njk'
+---
+
+{# <div id="drawer">
+    <div id="firstline">
+        <div class="arrow prev">
+            {% set previousPost = collections.worksSortedRespectingOrder | getPreviousCollectionItem %}
+            <a tabindex="-1" href="{{ previousPost.url }}"><span tabindex="0"></span></a>
+            {% include "../assets-inline/svg/arrow-left.svg" %}
+        </div>
+        <div id="description">
+            <div id="title">
+                {{ title }}
+            </div>
+            <div id="extra">
+                {{ extra }}
+            </div>
+        </div>
+        <div class="arrow next">
+            {% set nextPost = collections.worksSortedRespectingOrder | getNextCollectionItem %}
+            <a tabindex="-1" href="{{ nextPost.url }}"><span tabindex="0"></span></a>
+            {% include "../assets-inline/svg/arrow-right.svg" %}
+        </div>
+    </div>
+</div> #}
+
+{% asyncEach work in collections.worksSortedRespectingOrder %}
+    <div id="{{ work.fileSlug }}" class="workContainer">
+        {# {% include "test-work.njk" %} #}
+        <div class="workInfo">
+            <div class="extra">
+                {{ work.data.extra }}
+            </div>
+            <div class="title">
+                {{ work.data.title }}
+            </div>
+        </div>
+        <div class="imagesContainer">
+            {% asyncEach image in work.data.images %}
+                {% image image,
+                    "",
+                    [250, 300, 400, 450, 500, 550, 600, 650, 700, 750, 800, 'auto'],
+                    "(max-width: 250px) calc(250px - max(5vw,30px)),
+                        calc(100vw - max(5vw,30px))
+                    "
+                %}
+            {% endeach %}
+        </div>
+    </div>
+{% endeach %}
+
+{# <script>
+    addEventListener("load", (event) => {
+        document.getElementById(window.location.hash.split('#').pop()).scrollIntoView({ behavior: "smooth" });
+        console.log('done')
+    });
+</script> #}
