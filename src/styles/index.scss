@@ -3,10 +3,6 @@
 @import 'default-footer-content';
 @import 'work-card';
 
-// main {
-//     margin-top: $headerHeight;
-// }
-
 footer {
     padding-top: 0;
 }
@@ -19,10 +15,11 @@ footer {
 }
 
 @media (min-width: $maxCardWidth) {
+
     .cardContainer {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax($minCardDesktopWidth, 1fr));
-        margin-inline: $textOffsetHorizontal;
+        padding-inline: $textOffsetHorizontal;
         gap: $defaultGap;
         
         .card {
@@ -37,4 +34,12 @@ footer {
         }
     }
 
+}
+
+@media (min-width: $desktopSingleWorkBreakpoint) {
+    header,
+    #footer-content,
+    .cardContainer {
+        padding-inline: $textOffsetHorizontalMin;
+    }
 }
