@@ -4,7 +4,7 @@ $footerPaddingVertical: 30px;
 $footerFontSize: 0.7em;
 $footerHeight: calc(2 * $footerPaddingVertical + $footerFontSize);
 
-#footer-content {
+.footer-content {
     padding: $footerPaddingVertical $textOffsetHorizontal;
     font-size: $footerFontSize;
 }
