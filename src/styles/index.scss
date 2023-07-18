@@ -19,6 +19,7 @@ footer {
     .cardContainer {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax($minCardDesktopWidth, 1fr));
+        grid-auto-rows: 1fr;
         padding-inline: $textOffsetHorizontal;
         gap: $defaultGap;
         
@@ -36,10 +37,8 @@ footer {
 
 }
 
-@media (min-width: $desktopSingleWorkBreakpoint) {
-    header,
-    #footer-content,
-    .cardContainer {
-        padding-inline: $textOffsetHorizontalMin;
-    }
+header,
+#footer-content,
+.cardContainer {
+    padding-inline: $defaultGap;
 }
