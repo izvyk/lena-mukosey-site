@@ -2,13 +2,18 @@
 @import 'default-header';
 @import 'default-footer-content';
 
-$workInfoWidth: 28ch;
-$imagesContainerHeightVH: calc(100vh - 2 * $defaultGap);
-$imagesContainerHeightSVH: calc(100svh - 2 * $defaultGap);
+$workDescriptionTitleFontSize: 1.1rem;
+$workDescriptionExtraFontSize: 0.9rem;
 
-main {
-    margin-top: calc(-1 * $headerHeight);
-}
+$workInfoWidth: 28ch;
+
+$workInfoTextHeight: calc($workDescriptionTitleFontSize + $workDescriptionExtraFontSize);
+$workInfoHeight: calc($defaultGap + $workInfoTextHeight);
+
+$imagesContainerHeightMobileVH: calc(100vh - $headerHeight - $workInfoHeight);
+$imagesContainerHeightMobileSVH: calc(100svh - $headerHeight - $workInfoHeight);
+$imagesContainerHeightDesktopVH: calc(100vh - 2 * $defaultGap);
+$imagesContainerHeightDesktopSVH: calc(100svh - 2 * $defaultGap);
 
 header,
 .footer-content,
@@ -16,42 +21,47 @@ header,
     padding-inline: $defaultGap;
 }
 
-.workContainer {
-    display: grid;
-    grid-template-columns: 0fr 1fr;
+.footer-content {
+    text-align: end;
+    padding-inline: calc($defaultGap / 2);
+}
+
+main {
+    margin-top: calc(-1 * $defaultGap);
 }
 
 .workInfo {
-    width: $workInfoWidth;
     display: block;
     height: fit-content;
     position: sticky;
     margin-top: auto;
-    bottom: $defaultGap;
-    padding-top: $defaultGap;
+    bottom: 0;
+    padding: calc($defaultGap / 4) calc($defaultGap / 2) calc($defaultGap / 2);
+    text-align: end;
+
+    background-color: #fff;
 
     .title {
         font-weight: bold;
-        font-size: 1.1em;
+        font-size: $workDescriptionTitleFontSize;
     }
 
     .extra {
-        font-size: 0.9em;
+        font-size: $workDescriptionExtraFontSize;
     }
 }
 
 .imagesContainer {
     height: fit-content;
-    max-height: $imagesContainerHeightVH;
-    max-height: $imagesContainerHeightSVH;
+    max-height: $imagesContainerHeightMobileVH;
+    max-height: $imagesContainerHeightMobileSVH;
 
     // Just a fallback: scrollbar width causes problems
-    max-width: calc(100vw - $workInfoWidth - 4 * $defaultGap);
+    max-width: 100vw;
     max-width: -webkit-fill-available;
     max-width: -moz-available;
 
     margin-top: $defaultGap;
-    margin-right: $defaultGap;
 
     z-index: 1;
     overflow-y: hidden;
@@ -59,7 +69,6 @@ header,
 
     display: flex;
     gap: $defaultGap;
-    align-items: end;
 
     .imageWrapper {
         max-height: inherit;
@@ -82,5 +91,46 @@ header,
     img {
         max-width: inherit;
         max-height: inherit;
+    }
+}
+
+@media (min-width: $desktopSingleWorkBreakpoint) {
+    main {
+        margin-top: calc(-1 * $headerHeight);
+    }
+
+    .footer-content {
+        text-align: start;
+        padding-inline: $defaultGap;
+    }
+
+    .workContainer {
+        display: grid;
+        grid-template-columns: 0fr 1fr;
+    }
+
+    .workInfo {
+        order: 1;
+        width: $workInfoWidth;
+        bottom: $defaultGap;
+        padding: $defaultGap $defaultGap 0;
+        text-align: initial;
+
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .imagesContainer {
+        order: 2;
+        margin-right: $defaultGap;
+        align-items: end;
+
+        max-height: $imagesContainerHeightDesktopVH;
+        max-height: $imagesContainerHeightDesktopSVH;
+        
+        // Just a fallback: scrollbar width causes problems
+        max-width: calc(100vw - $workInfoWidth - 4 * $defaultGap);
+        max-width: -webkit-fill-available;
+        max-width: -moz-available;
     }
 }

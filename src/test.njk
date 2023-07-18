@@ -6,14 +6,6 @@ layout: 'base.njk'
 
 {% asyncEach work in collections.worksSortedRespectingOrder %}
     <div id="{{ work.fileSlug }}" class="workContainer">
-        <div class="workInfo">
-            <div class="extra">
-                {{ work.data.extra }}
-            </div>
-            <div class="title">
-                {{ work.data.title }}
-            </div>
-        </div>
                     {# [250, 300, 400, 450, 500, 550, 600, 650, 700, 750, 800, 'auto'], #}
         <div class="imagesContainer">
             {% asyncEach image in work.data.images %}
@@ -25,6 +17,14 @@ layout: 'base.njk'
                 %}
                 {# <img src="{{ work.data.image }}" alt="Alt!"> #}
             {% endeach %}
+        </div>
+        <div class="workInfo">
+            <div class="title">
+                {{ work.data.title }}
+            </div>
+            <div class="extra">
+                {{ work.data.extra }}
+            </div>
         </div>
     </div>
 {% endeach %}
