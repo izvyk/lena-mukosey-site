@@ -15,7 +15,7 @@ footer {
     display: none;
 }
 
-#text #footer-content {
+#text .footer-content {
     padding-inline: 0;
 }
 
@@ -143,7 +143,7 @@ footer {
         display: initial;
     }
 
-    #footer-content {
+    .footer-content {
         padding-inline: $textOffsetHorizontalMin;
     }
 
@@ -180,7 +180,7 @@ footer {
         order: 1;
         height: fit-content;
 
-        #footer-content {
+        .footer-content {
             display: none;
         }
 
