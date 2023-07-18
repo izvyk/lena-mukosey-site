@@ -32,3 +32,8 @@ p {
         flex: 1;
     }
 }
+
+header,
+.footer-content {
+    padding-inline: $defaultGap;
+}
