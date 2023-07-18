@@ -4,37 +4,6 @@ const Image = require("@11ty/eleventy-img");
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventySass);
 
-  // eleventyConfig.addNunjucksAsyncShortcode("imageSingleSize", async function(src, alt) {
-	// 	// if(alt === undefined) {
-	// 	// 	// You bet we throw an error on missing alt (alt="" works okay)
-	// 	// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
-	// 	// }
-
-	// 	let metadata = await Image("./src/assets/images/" + src, {
-	// 		// widths: [5, 150, 300, 600],
-	// 		formats: ['avif', 'jpeg'],
-  //     outputDir: 'public/assets/images',
-  //     urlPath: '/assets/images',
-  //     svgShortCircuit: true,
-	// 	});
-
-	// 	let lowsrc = metadata.jpeg[0];
-	// 	// let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
-	// 	// 			width="${highsrc.width}"
-	// 	// 			height="${highsrc.height}"
-
-	// 	return `<picture>
-	// 		${Object.values(metadata).map(imageFormat => {
-	// 			return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}">`;
-	// 		}).join("\n")}
-	// 			<img
-	// 				src="${lowsrc.url}"
-	// 				alt="${alt}"
-	// 				loading="lazy"
-	// 				decoding="async">
-	// 		</picture>`;
-	// });
-
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw", objectPosition = 'center') {
 		// if(alt === undefined) {
 		// 	// You bet we throw an error on missing alt (alt="" works okay)
@@ -50,38 +19,55 @@ module.exports = function (eleventyConfig) {
 		});
 
 		let lowsrc = metadata.jpeg[0];
-		// let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
-    // width="${highsrc.width}"
-    // height="${highsrc.height}"
+		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
 
-		// return `<img
-		// 			src="${lowsrc.url}"
-    //       srcset="${imageFormat.map(entry => entry.srcset).join(", ")}"
-    //       sizes="${sizes}"
-		// 			alt="${alt}"
-		// 			loading="lazy"
-		// 			decoding="async">`;
     return `<picture>
-      ${Object.values(metadata).map(imageFormat => {
-      return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-    }).join("\n")}
+    ${Object.values(metadata).map(imageFormat => {
+    return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+  }).join("\n")}
+      <img
+        src="${lowsrc.url}"
+        alt="${alt}"
+        loading="lazy"
+        decoding="async"
+        style="object-position: ${objectPosition}">
+    </picture>`;
+	});
+
+  eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw") {
+		// if(alt === undefined) {
+		// 	// You bet we throw an error on missing alt (alt="" works okay)
+		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
+		// }
+
+		let metadata = await Image("./src/assets/images/" + src, {
+			widths,
+			formats: ['avif', 'jpeg'],
+      outputDir: 'public/assets/images',
+      urlPath: '/assets/images',
+      svgShortCircuit: true,
+		});
+
+		let lowsrc = metadata.jpeg[0];
+		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+
+    return `
+      <div class="imageWrapper">
+        <picture>
+          ${Object.values(metadata).map(imageFormat => {
+            return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+          }).join("\n")}
+            <img
+              class="trueImage"
+              src="${lowsrc.url}"
+              alt="${alt}"
+              loading="lazy"
+              decoding="async">
+          </picture>
         <img
-          src="${lowsrc.url}"
-          alt="${alt}"
-          loading="lazy"
-          decoding="async"
-          style="object-position: ${objectPosition}">
-      </picture>`;
-      // return `<picture>
-      //   ${Object.values(metadata).map(imageFormat => {
-      //     return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-      //   }).join("\n")}
-      //     <img
-      //       src="${lowsrc.url}"
-      //       alt="${alt}"
-      //       loading="lazy"
-      //       decoding="async">
-      //   </picture>`;
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${highsrc.width}' height='${highsrc.height}'%3E%3Crect width='100%25' height='100%25' fill='%230000'/%3E%3C/svg%3E"
+          alt="${alt}">
+      </div>`;
 	});
 
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
@@ -126,7 +112,7 @@ module.exports = function (eleventyConfig) {
     return '/styles/' + path;
   });
 
-  // eleventyConfig.addPassthroughCopy('./src/assets');
+  eleventyConfig.addPassthroughCopy('./src/assets/favicon/');
 
   return {
     dir: {

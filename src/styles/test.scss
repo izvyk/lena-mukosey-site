@@ -11,21 +11,10 @@ main {
 }
 
 header,
-#footer-content,
+.footer-content,
 .workInfo {
     padding-inline: $defaultGap;
 }
-
-// header {
-//     box-shadow: 0 15px 30px #fff;
-//     border-style: solid;
-//     border-image: linear-gradient(transparent, red) 1;
-//     border-width: 0 0 100px 0;
-//     transform: translateY(calc(-1 * $headerHeight));
-//     box-shadow: 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0, 0 0 100px #ff0;
-//     mask-image: linear-gradient(to top, black calc(100% - 48px), transparent 100%);
-//     mask-image: linear-gradient(to top, black, transparent 50px);
-// }
 
 .workContainer {
     display: grid;
@@ -52,8 +41,6 @@ header,
 }
 
 .imagesContainer {
-    // mask-image: linear-gradient(to top, black, transparent 50px);
-
     height: fit-content;
     max-height: $imagesContainerHeightVH;
     max-height: $imagesContainerHeightSVH;
@@ -63,29 +50,37 @@ header,
     max-width: -webkit-fill-available;
     max-width: -moz-available;
 
-
     margin-top: $defaultGap;
     margin-right: $defaultGap;
 
     z-index: 1;
+    overflow-y: hidden;
+    overflow-x: auto;
 
     display: flex;
     gap: $defaultGap;
-    overflow-y: hidden;
+    align-items: end;
 
-    picture {
-        height: inherit;
+    .imageWrapper {
         max-height: inherit;
         max-width: inherit;
+        height: fit-content;
+        width: fit-content;
+
+        position: relative;
+        .trueImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #eee;
+            z-index: -1;
+        }
     }
 
     img {
-        object-fit: contain;
-
-        max-height: inherit;
         max-width: inherit;
-        height: inherit;
-        display: block;
-        width: auto;
+        max-height: inherit;
     }
 }
