@@ -1,6 +1,6 @@
 @import 'base';
 @import 'default-header';
-@import 'default-footer-content';
+@import 'default-footer';
 
 $workDescriptionTitleFontSize: 1.1rem;
 $workDescriptionExtraFontSize: 0.9rem;
@@ -16,12 +16,12 @@ $imagesContainerHeightDesktopVH: calc(100vh - 2 * $defaultGap);
 $imagesContainerHeightDesktopSVH: calc(100svh - 2 * $defaultGap);
 
 header,
-.footer-content,
+footer,
 .workInfo {
     padding-inline: $defaultGap;
 }
 
-.footer-content {
+footer {
     text-align: end;
     padding-inline: calc($defaultGap / 2);
 }
@@ -99,7 +99,7 @@ main {
         margin-top: calc(-1 * $headerHeight);
     }
 
-    .footer-content {
+    footer {
         text-align: start;
         padding-inline: $defaultGap;
     }

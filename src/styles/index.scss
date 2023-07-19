@@ -1,6 +1,6 @@
 @import 'base';
 @import 'default-header';
-@import 'default-footer-content';
+@import 'default-footer';
 @import 'work-card';
 
 footer {
@@ -38,7 +38,7 @@ footer {
 }
 
 header,
-#footer-content,
+footer,
 .cardContainer {
     padding-inline: $defaultGap;
 }

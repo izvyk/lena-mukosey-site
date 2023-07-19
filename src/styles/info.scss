@@ -1,7 +1,7 @@
 @import 'base';
 @import 'variables';
 @import 'default-header';
-@import 'default-footer-content';
+@import 'default-footer';
 
 main {
     // margin: min($headerHeight, $headerMaxHeight) $textOffsetHorizontal 0;
@@ -34,6 +34,6 @@ p {
 }
 
 header,
-.footer-content {
+footer {
     padding-inline: $defaultGap;
 }

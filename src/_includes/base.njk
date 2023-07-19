@@ -32,11 +32,7 @@
         {% endblock %}
     </main>
 
-    <footer>
-        {% block footer %}
-            {% include 'default-footer.njk' %}
-        {% endblock %}
-    </footer>
+    {% include 'default-footer.njk' %}
 
     {% if script is defined %}
         {% set js %}
