@@ -3,8 +3,8 @@
 @import 'default-footer';
 @import 'work-card';
 
-footer {
-    padding-top: 0;
+main {
+    min-height: calc(100vh - $headerHeight - $footerHeight);
 }
 
 .cardContainer {
@@ -35,5 +35,4 @@ footer {
             }
         }
     }
-
 }
