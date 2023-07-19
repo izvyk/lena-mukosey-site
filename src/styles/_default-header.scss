@@ -3,14 +3,12 @@
 $headerMaxHeight: 150px;
 $headerMinHeight: 55px;
 $nameFontSize: 30px;
-// $headerPreferredHeight: 12vh;
 $headerPreferredHeight: calc(2 * $defaultGap + $nameFontSize);
 
 $headerHeight: clamp($headerMinHeight, $headerPreferredHeight, $headerMaxHeight);
 
 header {
     display: flex;
-    // position: fixed;
     position: sticky;
     top: 0;
     height: $headerPreferredHeight;
@@ -18,14 +16,9 @@ header {
     max-height: $headerMaxHeight;
     box-sizing: border-box;
     z-index: 1;
-    // justify-content: space-between;
     align-items: center;
-    // font-size: 1.3em;
-    // width: 100vw;
-    // min-width: $minWidth;
 
-    padding-inline: $textOffsetHorizontal;
-    // margin: 0 $textOffsetHorizontal;
+    padding-inline: $defaultGap;
     background-color: #FFF;
     font-size: $nameFontSize;
 

@@ -15,12 +15,6 @@ $imagesContainerHeightMobileSVH: calc(100svh - $headerHeight - $workInfoHeight);
 $imagesContainerHeightDesktopVH: calc(100vh - 2 * $defaultGap);
 $imagesContainerHeightDesktopSVH: calc(100svh - 2 * $defaultGap);
 
-header,
-footer,
-.workInfo {
-    padding-inline: $defaultGap;
-}
-
 footer {
     text-align: end;
     padding-inline: calc($defaultGap / 2);
@@ -101,7 +95,6 @@ main {
 
     footer {
         text-align: start;
-        padding-inline: $defaultGap;
     }
 
     .workContainer {

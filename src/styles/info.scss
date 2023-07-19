@@ -4,13 +4,11 @@
 @import 'default-footer';
 
 main {
-    // margin: min($headerHeight, $headerMaxHeight) $textOffsetHorizontal 0;
-    margin-inline: $textOffsetHorizontal;
+    margin-inline: $defaultGap;
     min-height: calc(100vh - $headerHeight - $footerHeight);
-}
-
-p {
-    margin: 0;
+    display: flex;
+    gap: $defaultGap;
+    flex-wrap: wrap;
 }
 
 #photo {
@@ -18,22 +16,8 @@ p {
 }
 
 @media (min-width: $desktopWorksListBreakpoint) {
-    main {
-        display: flex;
-        gap: $defaultGap;
-        // flex-wrap: wrap;
-        // justify-content: space-evenly;
-        // align-items: center;
-        // column-gap: 3em;
-    }
-
     #photo-and-contacts,
     #text {
         flex: 1;
     }
-}
-
-header,
-footer {
-    padding-inline: $defaultGap;
 }

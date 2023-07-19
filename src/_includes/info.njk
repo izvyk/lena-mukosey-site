@@ -8,7 +8,7 @@ layout: 'base.njk'
     <img id="photo" src="{{ avatarPhoto | prefixWithAssetsPath }}" alt="{{ avatarPhotoAlt }}">
 
     <div class="containerContacts">
-        <p>Instagram: <a href="https://instagram.com/lena_mukosey/" target="_blank">lena_mukosey</a></p>
+        <div>Instagram: <a href="https://instagram.com/lena_mukosey/" target="_blank">lena_mukosey</a></div>
         {# <p>E-mail: <a href="mailto:example@domain.com" target="_blank">example@domain.com</a></p> #}
         {# <p>Telegram: <a href="https://t.me/nickname" target="_blank">@nickname</a></p> #}
         {# <p>WhatsApp: <a href="https://wa.me/+79991234567" target="_blank">+7 (999) 123-45-67</a></p> #}
@@ -17,5 +17,5 @@ layout: 'base.njk'
     </div>
 </div>
 <div id="text">
-    {{ content | safe }}
+    {{ text }}
 </div>

@@ -1,10 +1,10 @@
 @import 'variables';
 
-$footerPaddingVertical: 30px;
+$footerPaddingVertical: $defaultGap;
 $footerFontSize: 0.7em;
 $footerHeight: calc(2 * $footerPaddingVertical + $footerFontSize);
 
 footer {
-    padding: $footerPaddingVertical $textOffsetHorizontal;
+    padding: $footerPaddingVertical $defaultGap;
     font-size: $footerFontSize;
 }
