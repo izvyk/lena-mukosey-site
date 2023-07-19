@@ -11,9 +11,10 @@ layout: 'base.njk'
             {% asyncEach image in work.data.images %}
                 {% imageWithPlaceholder image,
                     "",
-                    ['auto'],
-                    none,
-                    "bottom"
+                    [250, 500, 700, 'auto'],
+                    "(max-width: 650px) 100vw,
+                    calc(100vw - $workInfoWidth - 4 * $defaultGap)
+                    "
                 %}
                 {# <img src="{{ work.data.image }}" alt="Alt!"> #}
             {% endeach %}
