@@ -8,7 +8,6 @@ $maxCardDesktopWidth: 380px;
 .card {
     position: relative;
     overflow-wrap: break-word;
-    margin-inline: $textOffsetHorizontal;
 
     min-width: $minCardWidth;
     max-width: $maxCardWidth;
