@@ -1,8 +1,13 @@
 const eleventySass = require('eleventy-sass');
+const rev = require("eleventy-plugin-rev");
 const Image = require("@11ty/eleventy-img");
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addPlugin(eleventySass);
+  eleventyConfig.addPlugin(rev);
+
+  eleventyConfig.addPlugin(eleventySass, {
+    rev: true,
+  });
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw", objectPosition = 'center') {
 		// if(alt === undefined) {
