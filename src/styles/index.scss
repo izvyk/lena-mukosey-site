@@ -8,11 +8,23 @@ main {
 }
 
 .cardContainer {
+    padding-top: calc($focusOffset + $focusOutlineWidth);
     position: relative;
     padding-inline: $defaultGap;
 
     .card {
         margin-bottom: $defaultGap;
+        
+        a {
+            outline: inherit;
+            text-decoration: inherit;
+            color: inherit;
+        
+            &:focus-visible span {
+                outline: $focusOutline;
+                outline-offset: $focusOffset;
+            }
+        }
     }
 }
 

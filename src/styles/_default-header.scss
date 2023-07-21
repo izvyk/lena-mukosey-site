@@ -15,12 +15,17 @@ header {
     min-height: $headerMinHeight;
     max-height: $headerMaxHeight;
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 2;
     align-items: center;
 
     padding-inline: $defaultGap;
     background-color: #FFF;
     font-size: $nameFontSize;
+
+    a:focus-visible {
+        outline: $focusOutline;
+        outline-offset: 1.5px;
+    }
 
     #name {
         font-weight: bold;

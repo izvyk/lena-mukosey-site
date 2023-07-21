@@ -16,11 +16,14 @@
     </div>
     <div class="description">
         <p class="title">
-            {{ work.data.title }}
+            <a href="/works#{{ work.data.titleEnglish | slugify }}">
+                {{ work.data.title }}
+                <span></span>
+            </a>
         </p>
         <p class="extra">
             {{ work.data.extra }}
         </p>
     </div>
-    <a tabindex="-1" href="/works#{{ work.data.titleEnglish | slugify }}"><span tabindex="0"></span></a>
+    {# <a tabindex="-1" href="/works#{{ work.data.titleEnglish | slugify }}"><span tabindex="0"></span></a> #}
 </div>

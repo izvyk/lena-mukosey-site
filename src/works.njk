@@ -5,8 +5,8 @@ layout: 'base.njk'
 ---
 
 {% asyncEach work in collections.worksSortedRespectingOrder %}
-    <div id="{{ work.data.titleEnglish | slugify }}" class="workContainer">
-        <div class="imagesContainer">
+    <div id="{{ work.data.titleEnglish | slugify }}" class="workContainer" tabindex="0">
+        <div class="imagesContainer" tabindex="-1">
             {% asyncEach image in work.data.images %}
                 {% imageWithPlaceholder image,
                     "",

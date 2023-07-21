@@ -15,7 +15,7 @@ $imagesContainerHeightMobileSVH: calc(100svh - $headerHeight - $workInfoHeight);
 $imagesContainerHeightDesktopVH: calc(100vh - 2 * $defaultGap);
 $imagesContainerHeightDesktopSVH: calc(100svh - 2 * $defaultGap);
 
-$imagesContainerGap: $defaultGap;
+$worksGap: $defaultGap;
 
 footer {
     text-align: end;
@@ -57,14 +57,12 @@ main {
     max-width: -webkit-fill-available;
     max-width: -moz-available;
 
-    margin-top: $imagesContainerGap;
-
-    z-index: 1;
+    z-index: 2;
     overflow-y: hidden;
     overflow-x: auto;
 
     display: flex;
-    gap: $imagesContainerGap;
+    gap: $worksGap;
 
     .imageWrapper {
         max-height: inherit;
@@ -90,11 +88,22 @@ main {
     }
 }
 
+.workContainer {
+    margin-top: $worksGap;
+    outline: none;
+
+    &:focus-visible .workInfo {
+        outline: $focusOutline;
+        // outline-offset: $focusOffset;
+        outline-offset: calc(-1 * $defaultGap / 4);
+    }
+}
+
 @media (max-width: $desktopSingleWorkBreakpoint) {
     // Fixed header anchor problem workaround
     .workContainer {
-        padding-top: calc($headerHeight - $imagesContainerGap);
-        margin-top: calc(-1 * $headerHeight + $imagesContainerGap);
+        padding-top: calc($headerHeight - $worksGap);
+        margin-top: calc(-1 * $headerHeight + $worksGap);
     }
 }
 
@@ -111,13 +120,18 @@ main {
     .workContainer {
         display: grid;
         grid-template-columns: 0fr 1fr;
+
+        &:focus-visible .workInfo {
+            outline-offset: calc($focusOffset - $defaultGap);
+        }
     }
 
     .workInfo {
         order: 1;
         width: $workInfoWidth;
-        bottom: $defaultGap;
-        padding: $defaultGap $defaultGap 0;
+        bottom: 0;
+        padding: $defaultGap;
+        margin-bottom: calc(-1 * $defaultGap + $focusOffset + $focusOutlineWidth);
         text-align: initial;
 
         display: flex;
