@@ -29,10 +29,6 @@ main {
             min-width: $minCardDesktopWidth;
             max-width: $maxCardDesktopWidth;
             aspect-ratio: 1;
-    
-            &:last-child {
-                margin-right: auto;
-            }
         }
     }
 }
