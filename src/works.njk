@@ -18,8 +18,9 @@ layout: 'base.njk'
                 {# <img src="{{ work.data.image }}" alt="Alt!"> #}
             {% endeach %}
         </div>
+        <div class="workDescription mobile">{{ work.data.text }}</div>
         <div class="workInfo">
-            <div class="workDescription">
+            <div class="workDescription desktop">
                 {{ work.data.text }}
             </div>
             <div class="short">

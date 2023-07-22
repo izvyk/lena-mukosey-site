@@ -6,6 +6,7 @@ $workDescriptionTitleFontSize: 1.1rem;
 $workDescriptionExtraFontSize: 0.9rem;
 
 $workInfoWidth: 28ch;
+$workInfoPadding: calc($defaultGap / 4) calc($defaultGap / 2) calc($defaultGap / 2);
 
 $workInfoTextHeight: calc($workDescriptionTitleFontSize + $workDescriptionExtraFontSize);
 $workInfoHeight: calc($defaultGap + $workInfoTextHeight);
@@ -30,9 +31,9 @@ main {
     display: block;
     height: fit-content;
     position: sticky;
-    margin-top: auto;
     bottom: 0;
-    // padding: calc($defaultGap / 4) calc($defaultGap / 2) calc($defaultGap / 2);
+    margin-top: calc(-1 * $defaultGap / 4);
+    padding: calc($defaultGap / 2);
     text-align: end;
 
     background-color: #fff;
@@ -45,9 +46,21 @@ main {
     .extra {
         font-size: $workDescriptionExtraFontSize;
     }
-    
-    .workDescription {
-        word-wrap: break-word;
+}
+
+.workDescription {
+    word-wrap: break-word;
+
+    &.mobile {
+        padding: $workInfoPadding;
+
+        &:empty {
+            padding: 0;
+        }
+    }
+
+    &.desktop {
+        display: none;
     }
 }
 
@@ -98,7 +111,7 @@ main {
 
     &:focus-visible .workInfo .short {
         outline: $focusOutline;
-        outline-offset: calc($focusOffset - $defaultGap);
+        outline-offset: calc($focusOffset / 3);
     }
 }
 
@@ -129,16 +142,24 @@ main {
         }
     }
 
+    .workDescription {
+        &.mobile {
+            display: none;
+        }
+
+        &.desktop {
+            margin-block: $defaultGap;
+            display: initial;
+        }
+    }
+
     .workInfo {
         order: 1;
         width: $workInfoWidth;
-        bottom: 0;
-        padding-inline: $defaultGap;
-        margin-bottom: calc(-1 * $defaultGap);
+        // bottom: 0;
+        padding: 0 $defaultGap 0;
+        margin-block: auto calc(-1 * $defaultGap);
         text-align: initial;
-
-        // display: flex;
-        // flex-direction: column-reverse;
 
         .short {
             display: flex;
@@ -150,12 +171,6 @@ main {
             margin-inline: calc(-1 * $defaultGap);
 
             background-color: inherit;
-
-            // margin-bottom: calc($focusOffset + $focusOutlineWidth);
-        }
-        
-        .workDescription {
-            margin-block: $defaultGap;
         }
     }
 
