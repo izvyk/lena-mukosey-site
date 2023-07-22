@@ -32,7 +32,7 @@ main {
     position: sticky;
     margin-top: auto;
     bottom: 0;
-    padding: calc($defaultGap / 4) calc($defaultGap / 2) calc($defaultGap / 2);
+    // padding: calc($defaultGap / 4) calc($defaultGap / 2) calc($defaultGap / 2);
     text-align: end;
 
     background-color: #fff;
@@ -44,6 +44,10 @@ main {
 
     .extra {
         font-size: $workDescriptionExtraFontSize;
+    }
+    
+    .workDescription {
+        word-wrap: break-word;
     }
 }
 
@@ -92,10 +96,9 @@ main {
     margin-top: $worksGap;
     outline: none;
 
-    &:focus-visible .workInfo {
+    &:focus-visible .workInfo .short {
         outline: $focusOutline;
-        // outline-offset: $focusOffset;
-        outline-offset: calc(-1 * $defaultGap / 4);
+        outline-offset: calc($focusOffset - $defaultGap);
     }
 }
 
@@ -130,12 +133,30 @@ main {
         order: 1;
         width: $workInfoWidth;
         bottom: 0;
-        padding: $defaultGap;
-        margin-bottom: calc(-1 * $defaultGap + $focusOffset + $focusOutlineWidth);
+        padding-inline: $defaultGap;
+        margin-bottom: calc(-1 * $defaultGap);
         text-align: initial;
 
-        display: flex;
-        flex-direction: column-reverse;
+        // display: flex;
+        // flex-direction: column-reverse;
+
+        .short {
+            display: flex;
+            flex-direction: column-reverse;
+            position: sticky;
+            bottom: 0;
+            padding: $defaultGap;
+            margin-top: calc(-1 * $defaultGap);
+            margin-inline: calc(-1 * $defaultGap);
+
+            background-color: inherit;
+
+            // margin-bottom: calc($focusOffset + $focusOutlineWidth);
+        }
+        
+        .workDescription {
+            margin-block: $defaultGap;
+        }
     }
 
     .imagesContainer {

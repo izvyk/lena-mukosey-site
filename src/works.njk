@@ -19,11 +19,16 @@ layout: 'base.njk'
             {% endeach %}
         </div>
         <div class="workInfo">
-            <div class="title">
-                {{ work.data.title }}
+            <div class="workDescription">
+                {{ work.data.text }}
             </div>
-            <div class="extra">
-                {{ work.data.extra }}
+            <div class="short">
+                <div class="title">
+                    {{ work.data.title }}
+                </div>
+                <div class="extra">
+                    {{ work.data.extra }}
+                </div>
             </div>
         </div>
     </div>
