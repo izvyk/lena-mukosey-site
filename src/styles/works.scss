@@ -52,7 +52,11 @@ main {
     word-wrap: break-word;
 
     &.mobile {
-        padding: $workInfoPadding;
+        padding: 0 ($defaultGap / 2) calc(2 * $defaultGap);
+        margin-top: calc(-1 * $defaultGap / 3);
+        text-align: end;
+        position: relative;
+        z-index: 1;
 
         &:empty {
             padding: 0;
@@ -149,7 +153,7 @@ main {
 
         &.desktop {
             margin-block: $defaultGap;
-            display: initial;
+            display: block;
         }
     }
 
