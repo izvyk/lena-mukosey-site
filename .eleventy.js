@@ -9,7 +9,7 @@ module.exports = function (eleventyConfig) {
     rev: true,
   });
 
-  eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw", objectPosition = 'center') {
+  eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw") {
 		// if(alt === undefined) {
 		// 	// You bet we throw an error on missing alt (alt="" works okay)
 		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
@@ -32,10 +32,11 @@ module.exports = function (eleventyConfig) {
   }).join("\n")}
       <img
         src="${lowsrc.url}"
+        width="${highsrc.width}"
+        height="${highsrc.height}"
         alt="${alt}"
         loading="lazy"
         decoding="async"
-        style="object-position: ${objectPosition}">
     </picture>`;
 	});
 

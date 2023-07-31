@@ -13,21 +13,12 @@ $maxCardDesktopWidth: 380px;
     max-width: $maxCardWidth;
 
     .imageContainer {
-        width: 100%;
-        aspect-ratio: 4/3;
         background-color: #eee;
     }
 
-    picture {
-        display: block;
-        aspect-ratio: 4 / 3;
-        overflow: hidden;
-    }
-
     img {
-        object-fit: cover;
         width: 100%;
-        height: 100%;
+        height: auto;
     }
 
     .description {
