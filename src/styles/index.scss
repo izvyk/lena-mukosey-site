@@ -12,6 +12,11 @@ main {
     position: relative;
     padding-inline: $defaultGap;
 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: $defaultGap;
+
     .card {
         margin-bottom: $defaultGap;
         
@@ -30,11 +35,7 @@ main {
 
 @media (min-width: $maxCardWidth) {
     .cardContainer {
-        display: grid;
         grid-template-columns: repeat(auto-fit, minmax($minCardDesktopWidth, 1fr));
-        grid-auto-rows: 1fr;
-        padding-inline: $defaultGap;
-        gap: $defaultGap;
         
         .card {
             margin: 0;
