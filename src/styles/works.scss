@@ -52,7 +52,7 @@ main {
     word-wrap: break-word;
 
     &.mobile {
-        padding: 0 ($defaultGap / 2) calc(2 * $defaultGap);
+        padding: 0 calc($defaultGap / 2) calc(2 * $defaultGap);
         margin-top: calc(-1 * $defaultGap / 3);
         text-align: end;
         position: relative;
@@ -110,7 +110,7 @@ main {
 }
 
 .workContainer {
-    margin-top: $worksGap;
+    padding-top: $worksGap;
     outline: none;
 
     &:focus-visible .workInfo .short {
@@ -126,8 +126,10 @@ main {
 @media (max-width: $desktopSingleWorkBreakpoint) {
     // Fixed header anchor problem workaround
     .workContainer {
-        padding-top: calc($headerHeight - $worksGap);
-        margin-top: calc(-1 * $headerHeight + $worksGap);
+        // padding-top: calc($headerHeight - $worksGap);
+        padding-top: calc($headerHeight);
+        // margin-top: calc(-1 * $headerHeight + $worksGap);
+        margin-top: calc(-1 * $headerHeight);
     }
 }
 
