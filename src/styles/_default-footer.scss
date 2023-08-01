@@ -5,6 +5,12 @@ $footerFontSize: 0.7em;
 $footerHeight: calc(2 * $footerPaddingVertical + $footerFontSize);
 
 footer {
-    padding: $footerPaddingVertical $defaultGap;
-    font-size: $footerFontSize;
+    height: $footerHeight;
+    display: flex;
+    
+    #text {
+        flex: 1;
+        margin: auto $footerPaddingVertical;
+        font-size: $footerFontSize;
+    }
 }

@@ -19,12 +19,16 @@ $imagesContainerHeightDesktopSVH: calc(100svh - 2 * $defaultGap);
 $worksGap: $defaultGap;
 
 footer {
-    text-align: end;
-    padding-inline: calc($defaultGap / 2);
+    #text {
+        margin-inline: calc($defaultGap / 2);
+        text-align: end;
+    }
 }
 
 main {
     margin-top: calc(-1 * $defaultGap);
+    min-height: calc(100vh - $headerHeight - $footerHeight);
+    min-height: calc(100svh - $headerHeight - $footerHeight);
 }
 
 .workInfo {
@@ -52,7 +56,7 @@ main {
     word-wrap: break-word;
 
     &.mobile {
-        padding: 0 calc($defaultGap / 2) calc(2 * $defaultGap);
+        padding-inline: calc($defaultGap / 2);
         margin-top: calc(-1 * $defaultGap / 3);
         text-align: end;
         position: relative;
@@ -110,7 +114,7 @@ main {
 }
 
 .workContainer {
-    padding-top: $worksGap;
+    padding-block: $worksGap;
     outline: none;
 
     &:focus-visible .workInfo .short {
@@ -139,8 +143,10 @@ main {
     }
 
     footer {
-        padding-inline: $defaultGap;
-        text-align: start;
+        #text {
+            margin-inline: $defaultGap;
+            text-align: start;
+        }
     }
 
     .workContainer {
