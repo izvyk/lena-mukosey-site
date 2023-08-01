@@ -6,6 +6,7 @@
 main {
     margin-inline: $defaultGap;
     min-height: calc(100vh - $headerHeight - $footerHeight);
+    min-height: calc(100svh - $headerHeight - $footerHeight);
     display: flex;
     gap: $defaultGap;
     flex-wrap: wrap;

@@ -5,6 +5,7 @@
 
 main {
     min-height: calc(100vh - $headerHeight - $footerHeight);
+    min-height: calc(100svh - $headerHeight - $footerHeight);
 }
 
 .cardContainer {
@@ -13,13 +14,10 @@ main {
     padding-inline: $defaultGap;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: fit-content;
+    grid-template-columns: 1fr 1fr;
     gap: $defaultGap;
 
     .card {
-        margin-bottom: $defaultGap;
-        
         a {
             outline: inherit;
             text-decoration: inherit;
