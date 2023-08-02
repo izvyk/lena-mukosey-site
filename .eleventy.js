@@ -2,11 +2,27 @@ const eleventySass = require('eleventy-sass');
 const rev = require("eleventy-plugin-rev");
 const Image = require("@11ty/eleventy-img");
 
+const htmlmin = require("html-minifier");
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(rev);
 
   eleventyConfig.addPlugin(eleventySass, {
     rev: true,
+    // minifyClassnames: 
+  });
+
+  eleventyConfig.addTransform("htmlmin", function(content) {
+    if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true
+      });
+      return minified;
+    }
+
+    return content;
   });
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw") {
