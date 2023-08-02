@@ -1,21 +1,23 @@
----
-layout: 'base.njk'
----
+{% extends "base.njk" %}
 
-<div id="photo-and-contacts">
-    {# {% include "./assets/images/portrait.svg" %} #}
-    {# <img id="photo" src="{{ 'portrait.jpg' | prefixWithAssetsPath }}" alt="Lena Mukosey"> #}
-    <img id="photo" src="{{ avatarPhoto | prefixWithAssetsPath }}" alt="{{ avatarPhotoAlt }}">
+{% block content %}
+    <main>
+        <div id="photo-and-contacts">
+            {# {% include "./assets/images/portrait.svg" %} #}
+            {# <img id="photo" src="{{ 'portrait.jpg' | prefixWithAssetsPath }}" alt="Lena Mukosey"> #}
+            <img id="photo" src="{{ avatarPhoto | prefixWithAssetsPath }}" alt="{{ avatarPhotoAlt }}" itemprop="image">
 
-    <div class="containerContacts">
-        <div>Instagram: <a href="https://instagram.com/lena_mukosey/" target="_blank">lena_mukosey</a></div>
-        {# <p>E-mail: <a href="mailto:example@domain.com" target="_blank">example@domain.com</a></p> #}
-        {# <p>Telegram: <a href="https://t.me/nickname" target="_blank">@nickname</a></p> #}
-        {# <p>WhatsApp: <a href="https://wa.me/+79991234567" target="_blank">+7 (999) 123-45-67</a></p> #}
-        {# <p>Mobile: <a href="tel:+7 999 1234567">+7 (999) 123-45-67</a></p> #}
-        {# <p>LinkedIn: <a href="https://www.linkedin.com/in/nickname/" target="_blank">linkedin.com/in/nickname</a></p> #}
-    </div>
-</div>
-<div id="text">
-    {{ text }}
-</div>
+            <div class="containerContacts">
+                <div>Instagram: <a itemprop="sameAs" href="https://instagram.com/lena_mukosey/" target="_blank">lena_mukosey</a></div>
+                {# <p>E-mail: <a href="mailto:example@domain.com" target="_blank">example@domain.com</a></p> #}
+                {# <p>Telegram: <a href="https://t.me/nickname" target="_blank">@nickname</a></p> #}
+                {# <p>WhatsApp: <a href="https://wa.me/+79991234567" target="_blank">+7 (999) 123-45-67</a></p> #}
+                {# <p>Mobile: <a href="tel:+7 999 1234567">+7 (999) 123-45-67</a></p> #}
+                {# <p>LinkedIn: <a href="https://www.linkedin.com/in/nickname/" target="_blank">linkedin.com/in/nickname</a></p> #}
+            </div>
+        </div>
+        <div id="text" itemprop="description">
+            {{ text }}
+        </div>
+    </main>
+{% endblock content %}

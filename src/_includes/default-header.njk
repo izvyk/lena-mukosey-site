@@ -1,4 +1,6 @@
-<a id="name" href="/">Lena Mukosey</a>
-<a id="info" href="/info">
-    {% include "../assets-inline/svg/info-icon.svg" %}
-</a>
+<header {% if '/info' not in page.url %}itemscope itemtype="https://schema.org/Person"{% endif %}>
+    <a id="name" href="/"><span itemprop="name">Lena Mukosey</span></a>
+    <a id="info" href="/info" itemprop="sameAs">
+        {% include "../assets-inline/svg/info-icon.svg" %}
+    </a>
+</header>
