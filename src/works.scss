@@ -1,0 +1,208 @@
+@use 'variables' as var;
+
+@use 'base';
+@use 'header';
+@use 'footer';
+
+$workDescriptionTitleFontSize: 1.1rem;
+$workDescriptionExtraFontSize: 0.9rem;
+
+$workInfoWidth: 28ch;
+$workInfoPadding: calc(var.$defaultGap / 4) calc(var.$defaultGap / 2) calc(var.$defaultGap / 2);
+
+$workInfoTextHeight: calc($workDescriptionTitleFontSize + $workDescriptionExtraFontSize);
+$workInfoHeight: calc(var.$defaultGap + $workInfoTextHeight);
+
+$imagesContainerHeightMobileVH: calc(100vh - header.$height - $workInfoHeight);
+$imagesContainerHeightMobileSVH: calc(100svh - header.$height - $workInfoHeight);
+$imagesContainerHeightDesktopVH: calc(100vh - 2 * var.$defaultGap);
+$imagesContainerHeightDesktopSVH: calc(100svh - 2 * var.$defaultGap);
+
+$worksGap: var.$defaultGap;
+
+footer {
+    #text {
+        margin-inline: calc(var.$defaultGap / 2);
+        text-align: end;
+    }
+}
+
+main {
+    margin-top: calc(-1 * var.$defaultGap);
+    min-height: calc(100vh - header.$height - footer.$height);
+    min-height: calc(100svh - header.$height - footer.$height);
+}
+
+.workInfo {
+    display: block;
+    height: fit-content;
+    position: sticky;
+    bottom: 0;
+    margin-top: calc(-1 * var.$defaultGap / 4);
+    padding: calc(var.$defaultGap / 2);
+    text-align: end;
+
+    background-color: #fff;
+
+    .title {
+        font-weight: bold;
+        font-size: $workDescriptionTitleFontSize;
+    }
+
+    .extra {
+        font-size: $workDescriptionExtraFontSize;
+    }
+}
+
+.workDescription {
+    word-wrap: break-word;
+
+    &.mobile {
+        padding-inline: calc(var.$defaultGap / 2);
+        margin-top: calc(-1 * var.$defaultGap / 3);
+        text-align: end;
+        position: relative;
+        z-index: 1;
+
+        &:empty {
+            padding: 0;
+        }
+    }
+
+    &.desktop {
+        display: none;
+    }
+}
+
+.imagesContainer {
+    height: fit-content;
+    max-height: $imagesContainerHeightMobileVH;
+    max-height: $imagesContainerHeightMobileSVH;
+
+    // Just a fallback: scrollbar width causes problems
+    max-width: 100vw;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+
+    z-index: 2;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    display: flex;
+    gap: $worksGap;
+
+    .imageWrapper {
+        max-height: inherit;
+        max-width: inherit;
+        height: fit-content;
+        width: fit-content;
+
+        position: relative;
+        .trueImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #eee;
+            z-index: -1;
+        }
+    }
+
+    img {
+        max-width: inherit;
+        max-height: inherit;
+    }
+}
+
+.workContainer {
+    padding-block: $worksGap;
+    outline: none;
+
+    &:focus-visible .workInfo .short {
+        outline: var.$focusOutline;
+        outline-offset: calc(var.$focusOffset / 3);
+    }
+
+    &:target .workInfo .short {
+        outline: none;
+    }
+}
+
+@media (max-width: var.$desktopSingleWorkBreakpoint) {
+    // Fixed header anchor problem workaround
+    .workContainer {
+        // padding-top: calc(header.$height - $worksGap);
+        padding-top: calc(header.$height);
+        // margin-top: calc(-1 * header.$height + $worksGap);
+        margin-top: calc(-1 * header.$height);
+    }
+}
+
+@media (min-width: var.$desktopSingleWorkBreakpoint) {
+    main {
+        margin-top: calc(-1 * header.$height);
+    }
+
+    footer {
+        #text {
+            margin-inline: var.$defaultGap;
+            text-align: start;
+        }
+    }
+
+    .workContainer {
+        display: grid;
+        grid-template-columns: 0fr 1fr;
+
+        &:focus-visible .workInfo {
+            outline-offset: calc(var.$focusOffset - var.$defaultGap);
+        }
+    }
+
+    .workDescription {
+        &.mobile {
+            display: none;
+        }
+
+        &.desktop {
+            margin-block: var.$defaultGap;
+            display: block;
+        }
+    }
+
+    .workInfo {
+        order: 1;
+        width: $workInfoWidth;
+        // bottom: 0;
+        padding: 0 var.$defaultGap 0;
+        margin-block: auto calc(-1 * var.$defaultGap);
+        text-align: initial;
+
+        .short {
+            display: flex;
+            flex-direction: column-reverse;
+            position: sticky;
+            bottom: 0;
+            padding: var.$defaultGap;
+            margin-top: calc(-1 * var.$defaultGap);
+            margin-inline: calc(-1 * var.$defaultGap);
+
+            background-color: inherit;
+        }
+    }
+
+    .imagesContainer {
+        order: 2;
+        margin-right: var.$defaultGap;
+        align-items: end;
+
+        max-height: $imagesContainerHeightDesktopVH;
+        max-height: $imagesContainerHeightDesktopSVH;
+        
+        // Just a fallback: scrollbar width causes problems
+        max-width: calc(100vw - $workInfoWidth - 4 * var.$defaultGap);
+        max-width: -webkit-fill-available;
+        max-width: -moz-available;
+    }
+}

@@ -1,0 +1,47 @@
+@use 'variables' as var;
+
+$maxHeight: 150px;
+$minHeight: 55px;
+$nameFontSize: 30px;
+$preferredHeight: calc(2 * var.$defaultGap + $nameFontSize);
+
+$height: clamp($minHeight, $preferredHeight, $maxHeight);
+
+header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: $preferredHeight;
+    min-height: $minHeight;
+    max-height: $maxHeight;
+    box-sizing: border-box;
+    z-index: 2;
+    align-items: center;
+
+    padding-inline: var.$defaultGap;
+    background-color: #fff;
+    font-size: $nameFontSize;
+
+    a:focus-visible {
+        outline: var.$focusOutline;
+        outline-offset: 1.5px;
+    }
+
+    #name {
+        font-weight: bold;
+        text-decoration: none;
+        color: #000;
+    }
+
+    #info {
+        height: 19px;
+        aspect-ratio: 1;
+        margin-left: 6px;
+        margin-top: 6px;
+        
+        svg {
+            display: block;
+            overflow: visible;
+        }
+    }
+}

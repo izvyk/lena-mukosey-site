@@ -17,8 +17,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap" rel="stylesheet">
-        {% if style is defined %}
-            {# <link rel="stylesheet" type="text/css" href="{{ style | prefixWithStylesPath | rev }}"> #}
+        {% if scss is defined %}
             {# <link rel="stylesheet" type="text/css" href="{{ style | prefixWithStylesPath | rev }}"> #}
             <style>
                 {{ scss | safe }}
@@ -26,7 +25,7 @@
         {% endif %}
     {% endblock %}
 </head>
-<body {% if '/info' in page.url %}itemscope itemtype="https://schema.org/Person"{% endif %}>
+<body {% if '/info' in page.url %} itemscope itemtype="https://schema.org/Person" {% endif %}>
     {% block header %}
         {% include 'default-header.njk' %}
     {% endblock %}

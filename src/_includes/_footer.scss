@@ -1,0 +1,16 @@
+@use 'variables' as var;
+
+$paddingVertical: var.$defaultGap;
+$fontSize: 0.7em;
+$height: calc(2 * $paddingVertical + $fontSize);
+
+footer {
+    height: $height;
+    display: flex;
+    
+    #text {
+        flex: 1;
+        margin: auto $paddingVertical;
+        font-size: $fontSize;
+    }
+}

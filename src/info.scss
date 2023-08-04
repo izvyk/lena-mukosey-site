@@ -1,0 +1,25 @@
+@use 'variables' as var;
+
+@use 'base';
+@use 'header';
+@use 'footer';
+
+main {
+    margin-inline: var.$defaultGap;
+    min-height: calc(100vh - header.$height - footer.$height);
+    min-height: calc(100svh - header.$height - footer.$height);
+    display: flex;
+    gap: var.$defaultGap;
+    flex-wrap: wrap;
+}
+
+#photo {
+    max-width: 100%;
+}
+
+@media (min-width: var.$desktopWorksListBreakpoint) {
+    #photo-and-contacts,
+    #text {
+        flex: 1;
+    }
+}

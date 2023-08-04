@@ -1,0 +1,47 @@
+@use 'variables' as var;
+
+@use 'base';
+@use 'header';
+@use 'footer';
+@use 'work-card';
+
+main {
+    min-height: calc(100vh - header.$height - footer.$height);
+    min-height: calc(100svh - header.$height - footer.$height);
+}
+
+.cardContainer {
+    padding-top: calc(var.$focusOffset + var.$focusOutlineWidth);
+    position: relative;
+    padding-inline: var.$defaultGap;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var.$defaultGap;
+
+    .card {
+        a {
+            outline: inherit;
+            text-decoration: inherit;
+            color: inherit;
+        
+            &:focus-visible span {
+                outline: var.$focusOutline;
+                outline-offset: var.$focusOffset;
+            }
+        }
+    }
+}
+
+@media (min-width: work-card.$maxCardWidth) {
+    .cardContainer {
+        grid-template-columns: repeat(auto-fit, minmax(work-card.$minCardDesktopWidth, 1fr));
+        
+        .card {
+            margin: 0;
+            min-width: work-card.$minCardDesktopWidth;
+            max-width: work-card.$maxCardDesktopWidth;
+            aspect-ratio: 1;
+        }
+    }
+}
