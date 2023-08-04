@@ -1,20 +1,24 @@
-const eleventySass = require('eleventy-sass');
-const rev = require("eleventy-plugin-rev");
 const Image = require("@11ty/eleventy-img");
 
 const htmlmin = require("html-minifier");
+const posthtml = require('posthtml');
+const minifyClassnames = require('posthtml-minify-classnames');
+
+const pluginInlineSass = require('eleventy-plugin-inline-sass');
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addPlugin(rev);
 
-  eleventyConfig.addPlugin(eleventySass, {
-    rev: true,
-    // minifyClassnames: 
+  eleventyConfig.addPlugin(pluginInlineSass, {
+    compiler: {
+      loadPaths: ['src/_includes']
+    }
   });
 
-  eleventyConfig.addTransform("htmlmin", function(content) {
+  eleventyConfig.addTransform("htmlmin", async function(content) {
     if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
-      let minified = htmlmin.minify(content, {
+      const { html } = await posthtml().use(minifyClassnames()).process(content);
+
+      let minified = htmlmin.minify(html, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true
@@ -24,6 +28,19 @@ module.exports = function (eleventyConfig) {
 
     return content;
   });
+
+  // eleventyConfig.addTransform("htmlmin", function(content) {
+  //   if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
+  //     let minified = htmlmin.minify(content, {
+  //       useShortDoctype: true,
+  //       removeComments: true,
+  //       collapseWhitespace: true
+  //     });
+  //     return minified;
+  //   }
+
+  //   return content;
+  // });
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw") {
 		// if(alt === undefined) {
@@ -127,6 +144,18 @@ module.exports = function (eleventyConfig) {
 
     return sortedWorks;
   });
+
+  // eleventyConfig.addNunjucksShortcode('inlineCSS', (path) => {
+  //   const fs = require('fs');
+
+  //   try {
+  //     const data = fs.readFileSync('./public' + path, 'utf8');
+  //     // console.log(data);
+  //     return data;
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // });
 
   eleventyConfig.addFilter('prefixWithAssetsPath', (path) => {
     // return '/test/assets/images/' + path;
