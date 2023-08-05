@@ -1,6 +1,5 @@
 ---
 title: 'Lena Mukosey'
-style: 'works.css'
 layout: 'base.njk'
 ---
 
@@ -10,9 +9,9 @@ layout: 'base.njk'
             {% asyncEach image in work.data.images %}
                 {% imageWithPlaceholder image,
                     "",
-                    [250, 500, 700, 'auto'],
+                    [285, 570, 855, 1097, 2194, 3291],
                     "(max-width: 650px) 100vw,
-                    calc(100vw - $workInfoWidth - 4 * $defaultGap)
+                     calc(100vw - 28ch - 4 * 20px)
                     "
                 %}
                 {# <img src="{{ work.data.image }}" alt="Alt!"> #}

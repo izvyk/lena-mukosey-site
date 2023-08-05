@@ -19,7 +19,7 @@ header {
     align-items: center;
 
     padding-inline: var.$defaultGap;
-    background-color: #fff;
+    background-color: var.$defaultBackgroundColor;
     font-size: $nameFontSize;
 
     a:focus-visible {
@@ -30,7 +30,7 @@ header {
     #name {
         font-weight: bold;
         text-decoration: none;
-        color: #000;
+        color: var.$defaultTextColor;
     }
 
     #info {

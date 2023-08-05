@@ -13,7 +13,7 @@ $maxCardDesktopWidth: 380px;
     max-width: $maxCardWidth;
 
     .imageContainer {
-        background-color: #eee;
+        background-color: var.$defaultDarkerBackgroundColor;
     }
 
     img {
@@ -31,7 +31,7 @@ $maxCardDesktopWidth: 380px;
         .extra {
             margin: 0;
             font-size: 0.8em;
-            color: #444;;
+            color: var.$defaultPaleTextColor;
         }
     }
 

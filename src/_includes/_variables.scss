@@ -1,6 +1,7 @@
 $defaultGap: 20px;
 
 $minPageWidth: 285px;
+$maxPageWidth: 1410px;
 
 $desktopWorksListBreakpoint: 440px;
 $desktopSingleWorkBreakpoint: 650px;
@@ -8,3 +9,8 @@ $desktopSingleWorkBreakpoint: 650px;
 $focusOutlineWidth: 2px;
 $focusOutline: $focusOutlineWidth dashed rgb(50%, 50%, 50%);
 $focusOffset: calc($defaultGap / 3);
+
+$defaultBackgroundColor: #fff;
+$defaultDarkerBackgroundColor: #eee;
+$defaultTextColor: #000;
+$defaultPaleTextColor: #444;

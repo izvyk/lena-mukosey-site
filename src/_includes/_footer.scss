@@ -7,6 +7,7 @@ $height: calc(2 * $paddingVertical + $fontSize);
 footer {
     height: $height;
     display: flex;
+    background-color: var.$defaultBackgroundColor;
     
     #text {
         flex: 1;

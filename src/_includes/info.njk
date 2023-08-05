@@ -3,9 +3,12 @@
 {% block content %}
     <main>
         <div id="photo-and-contacts">
-            {# {% include "./assets/images/portrait.svg" %} #}
-            {# <img id="photo" src="{{ 'portrait.jpg' | prefixWithAssetsPath }}" alt="Lena Mukosey"> #}
-            <img id="photo" src="{{ avatarPhoto | prefixWithAssetsPath }}" alt="{{ avatarPhotoAlt }}" itemprop="image">
+            {% image avatarPhoto,
+                avatarPhotoAlt,
+                [285, 675, 950, 1170, 1350],
+                "(min-width: 1500px) 675px, (min-width: 460px) calc(46.57vw - 14px), (min-width: 400px) calc(100vw - 40px), calc(68.75vw + 79px)",
+                lazy = false
+            %}
 
             <div class="containerContacts">
                 <div>Instagram: <a itemprop="sameAs" href="https://instagram.com/lena_mukosey/" target="_blank">lena_mukosey</a></div>

@@ -42,7 +42,7 @@ main {
     padding: calc(var.$defaultGap / 2);
     text-align: end;
 
-    background-color: #fff;
+    background-color: var.$defaultBackgroundColor;
 
     .title {
         font-weight: bold;
@@ -84,7 +84,6 @@ main {
     max-width: -webkit-fill-available;
     max-width: -moz-available;
 
-    z-index: 2;
     overflow-y: hidden;
     overflow-x: auto;
 
@@ -104,8 +103,11 @@ main {
             left: 0;
             height: 100%;
             width: 100%;
-            background-color: #eee;
-            z-index: -1;
+            background-color: var.$defaultDarkerBackgroundColor;
+        }
+
+        .placeholder {
+            position: relative;
         }
     }
 
@@ -132,9 +134,7 @@ main {
 @media (max-width: var.$desktopSingleWorkBreakpoint) {
     // Fixed header anchor problem workaround
     .workContainer {
-        // padding-top: calc(header.$height - $worksGap);
         padding-top: calc(header.$height);
-        // margin-top: calc(-1 * header.$height + $worksGap);
         margin-top: calc(-1 * header.$height);
     }
 }
@@ -174,8 +174,7 @@ main {
     .workInfo {
         order: 1;
         width: $workInfoWidth;
-        // bottom: 0;
-        padding: 0 var.$defaultGap 0;
+        padding: 0 var.$defaultGap;
         margin-block: auto calc(-1 * var.$defaultGap);
         text-align: initial;
 
@@ -184,9 +183,8 @@ main {
             flex-direction: column-reverse;
             position: sticky;
             bottom: 0;
-            padding: var.$defaultGap;
+            padding-block: var.$defaultGap;
             margin-top: calc(-1 * var.$defaultGap);
-            margin-inline: calc(-1 * var.$defaultGap);
 
             background-color: inherit;
         }

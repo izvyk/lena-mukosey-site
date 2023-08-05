@@ -1,9 +1,8 @@
 ---
 title: 'Lena Mukosey - info'
-style: 'info.css'
 layout: 'info.njk'
 
-avatarPhoto: 'portrait-horizontal.jpg'
+avatarPhoto: 'lena-mukosey-avatar.jpg'
 avatarPhotoAlt: 'Lena Mukosey'
 text: "ksjkdgksjhdl
 Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
