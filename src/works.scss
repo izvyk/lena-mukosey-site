@@ -202,5 +202,7 @@ main {
         max-width: calc(100vw - $workInfoWidth - 4 * var.$defaultGap);
         max-width: -webkit-fill-available;
         max-width: -moz-available;
+
+        z-index: 2;
     }
 }
