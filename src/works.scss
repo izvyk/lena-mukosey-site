@@ -155,7 +155,7 @@ main {
         display: grid;
         grid-template-columns: 0fr 1fr;
 
-        &:focus-visible .workInfo {
+        &:focus-visible .workInfo .short {
             outline-offset: calc(var.$focusOffset - var.$defaultGap);
         }
     }
@@ -183,8 +183,9 @@ main {
             flex-direction: column-reverse;
             position: sticky;
             bottom: 0;
-            padding-block: var.$defaultGap;
+            padding: var.$defaultGap;
             margin-top: calc(-1 * var.$defaultGap);
+            margin-inline: calc(-1 * var.$defaultGap);
 
             background-color: inherit;
         }
