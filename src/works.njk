@@ -23,7 +23,11 @@ layout: 'base.njk'
             </div>
             <div class="short">
                 <div class="title">
-                    {{ work.data.title }}
+                    {{ work.data.title }},
+                    {% if work.data.dateStart %}
+                        {{ work.data.dateStart }} -
+                    {% endif %}
+                    {{ work.data.dateEnd }}
                 </div>
                 <div class="extra">
                     <span itemprop="material">{{ work.data.extra }}</span>,
