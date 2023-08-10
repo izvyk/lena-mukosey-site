@@ -13,7 +13,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addTransform("htmlmin", async function(content) {
     if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
-      const { html } = await posthtml().use(minifyClassnames()).process(content);
+      const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
 
       let minified = htmlmin.minify(html, {
         useShortDoctype: true,

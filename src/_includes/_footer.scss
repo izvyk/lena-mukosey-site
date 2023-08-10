@@ -9,7 +9,7 @@ footer {
     display: flex;
     background-color: var.$defaultBackgroundColor;
     
-    #text {
+    .text {
         flex: 1;
         margin: auto $paddingVertical;
         font-size: $fontSize;

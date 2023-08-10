@@ -27,13 +27,13 @@ header {
         outline-offset: 1.5px;
     }
 
-    #name {
+    .name {
         font-weight: bold;
         text-decoration: none;
         color: var.$defaultTextColor;
     }
 
-    #info {
+    .info {
         height: 19px;
         aspect-ratio: 1;
         margin-left: 6px;
