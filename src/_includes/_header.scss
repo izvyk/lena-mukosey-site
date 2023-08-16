@@ -7,6 +7,8 @@ $preferredHeight: calc(2 * var.$defaultGap + $nameFontSize);
 
 $height: clamp($minHeight, $preferredHeight, $maxHeight);
 
+$zindex: 2;
+
 header {
     display: flex;
     position: sticky;
@@ -15,7 +17,7 @@ header {
     min-height: $minHeight;
     max-height: $maxHeight;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: $zindex;
     align-items: center;
 
     padding-inline: var.$defaultGap;

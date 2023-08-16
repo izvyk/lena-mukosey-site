@@ -4,6 +4,7 @@ $maxCardWidth: var.$desktopWorksListBreakpoint;
 $minCardMobileWidth: 180px;
 $minCardDesktopWidth: 180px;
 $maxCardDesktopWidth: 380px;
+$cardZindex: 0; // not used directly yet
 
 .card {
     position: relative;
@@ -44,7 +45,7 @@ $maxCardDesktopWidth: 380px;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: calc($cardZindex + 1);
         }
     }
 }

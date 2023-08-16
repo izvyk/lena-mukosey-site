@@ -8,9 +8,8 @@ main {
     padding-inline: var.$defaultGap;
     min-height: calc(100vh - header.$height - footer.$height);
     min-height: calc(100svh - header.$height - footer.$height);
-    display: flex;
+    display: grid;
     gap: var.$defaultGap;
-    flex-wrap: wrap;
 }
 
 img {
@@ -18,11 +17,22 @@ img {
     height: auto;
 }
 
-@media (min-width: var.$desktopWorksListBreakpoint) {
+@media (min-width: var.$desktopInfoBreakpoint) {
     main {
-        .photo-and-contacts,
+        grid-template-columns: 1fr 1fr;
+
+        .textContainer {
+            order: -1;
+        }
+
         .text {
-            flex: 1;
+            position: sticky;
+            top: header.$height;
+        }
+
+        .photo-and-contacts {
+            margin-top: calc(-1 * header.$height + var.$defaultGap);
+            z-index: calc(header.$zindex + 1);
         }
     }
 }
