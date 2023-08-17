@@ -120,7 +120,7 @@ main {
 }
 
 .workContainer {
-    padding-block: $worksGap;
+    padding-top: $worksGap;
     outline: none;
 
     &:focus-visible .workInfo .short {
@@ -158,7 +158,7 @@ main {
         grid-template-columns: 0fr 1fr;
 
         &:focus-visible .workInfo .short {
-            outline-offset: calc(var.$focusOffset - var.$defaultGap);
+            outline-offset: calc(var.$focusOffset - var.$focusOutlineWidth / 2);
         }
     }
 
@@ -168,7 +168,7 @@ main {
         }
 
         &.desktop {
-            margin-block: var.$defaultGap;
+            // margin-block: var.$defaultGap;
             display: block;
         }
     }
@@ -179,15 +179,13 @@ main {
         padding: 0 var.$defaultGap;
         margin-block: auto calc(-1 * var.$defaultGap);
         text-align: initial;
+        padding-bottom: var.$defaultGap;
 
         .short {
             display: flex;
             flex-direction: column-reverse;
             position: sticky;
-            bottom: 0;
-            padding: var.$defaultGap;
-            margin-top: calc(-1 * var.$defaultGap);
-            margin-inline: calc(-1 * var.$defaultGap);
+            bottom: calc(var.$defaultGap);
 
             background-color: inherit;
         }
