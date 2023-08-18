@@ -61,6 +61,7 @@ main {
 
     &.mobile {
         padding-inline: calc(var.$defaultGap / 2);
+        padding-bottom: calc(var.$defaultGap / 2);
         margin-top: calc(-1 * var.$defaultGap / 3);
         text-align: end;
         position: relative;
@@ -160,6 +161,9 @@ main {
         &:focus-visible .workInfo .short {
             outline-offset: calc(var.$focusOffset - var.$focusOutlineWidth / 2);
         }
+
+        padding-bottom: var.$defaultGap;
+        margin-bottom: calc(-1 * var.$defaultGap);
     }
 
     .workDescription {
@@ -170,6 +174,7 @@ main {
         &.desktop {
             // margin-block: var.$defaultGap;
             display: block;
+            margin-bottom: var.$defaultGap;
         }
     }
 
@@ -187,6 +192,18 @@ main {
             position: sticky;
             bottom: calc(var.$defaultGap);
 
+            background-color: inherit;
+        }
+
+        .extra {
+            background-color: inherit;
+            padding-top: calc(var.$defaultGap / 2);
+            margin-top: calc(-1 * var.$defaultGap / 2);
+        }
+
+        .title {
+            padding-bottom: var.$defaultGap;
+            margin-bottom: calc(-1 * var.$defaultGap);
             background-color: inherit;
         }
     }
