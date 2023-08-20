@@ -93,6 +93,8 @@ main {
     display: flex;
     gap: $worksGap;
 
+    outline: none;
+
     .imageWrapper {
         max-height: inherit;
         max-width: inherit;
