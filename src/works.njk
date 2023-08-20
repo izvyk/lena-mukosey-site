@@ -4,37 +4,39 @@ layout: 'base.njk'
 ---
 
 {% asyncEach work in collections.worksSortedRespectingOrder %}
-    <div class="workContainer" tabindex="0" itemscope itemtype="https://schema.org/CreativeWork" id="{% if work.data.titleEnglish %}{{ work.data.titleEnglish | slugify }}{% else %}{{ work.data.title | transliterate | slugify }}{% endif %}">
-        <div class="imagesContainer" tabindex="-1">
-            {% asyncEach image in work.data.images %}
-                {% imageWithPlaceholder image,
-                    "",
-                    [285, 570, 855, 1097, 2194, 3291],
-                    "(max-width: 650px) 100vw, calc(100vw - 28ch - 4 * 20px)"
-                %}
-                {# <img src="{{ work.data.image }}" alt="Alt!"> #}
-            {% endeach %}
-        </div>
-        <div class="workInfo">
-            <div class="workDescription desktop" itemprop="description">
+    <div id="{% if work.data.titleEnglish %}{{ work.data.titleEnglish | slugify }}{% else %}{{ work.data.title | transliterate | slugify }}{% endif %}">
+        <div class="workContainer" tabindex="0" itemscope itemtype="https://schema.org/CreativeWork">
+            <div class="imagesContainer" tabindex="-1">
+                {% asyncEach image in work.data.images %}
+                    {% imageWithPlaceholder image,
+                        "",
+                        [285, 570, 855, 1097, 2194, 3291],
+                        "(max-width: 650px) 100vw, calc(100vw - 28ch - 4 * 20px)"
+                    %}
+                    {# <img src="{{ work.data.image }}" alt="Alt!"> #}
+                {% endeach %}
+            </div>
+            <div class="workInfo">
+                <div class="workDescription desktop" itemprop="description">
+                    {{ work.data.text }}
+                </div>
+                <div class="short">
+                    <div class="title">
+                        <span class="name" itemprop="name">{{ work.data.title }}</span>,
+                        {% if work.data.dateStart %}
+                            {{ work.data.dateStart }} -
+                        {% endif %}
+                        <span itemprop="dateCreated">{{ work.data.dateEnd }}</span>
+                    </div>
+                    <div class="extra">
+                        <span itemprop="material">{{ work.data.extra }}</span>,
+                        <span itemprop="size">{{ work.data.size }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="workDescription mobile" itemprop="description">
                 {{ work.data.text }}
             </div>
-            <div class="short">
-                <div class="title">
-                    <span class="name" itemprop="name">{{ work.data.title }}</span>,
-                    {% if work.data.dateStart %}
-                        {{ work.data.dateStart }} -
-                    {% endif %}
-                    <span itemprop="dateCreated">{{ work.data.dateEnd }}</span>
-                </div>
-                <div class="extra">
-                    <span itemprop="material">{{ work.data.extra }}</span>,
-                    <span itemprop="size">{{ work.data.size }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="workDescription mobile" itemprop="description">
-            {{ work.data.text }}
         </div>
     </div>
 {% endeach %}

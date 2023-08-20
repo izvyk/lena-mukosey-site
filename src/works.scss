@@ -124,10 +124,6 @@ main {
         outline: var.$focusOutline;
         outline-offset: calc(var.$focusOffset / 3);
     }
-
-    &:target .workInfo .short {
-        outline: none;
-    }
 }
 
 @media (max-width: var.$desktopSingleWorkBreakpoint) {
