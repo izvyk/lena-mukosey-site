@@ -22,7 +22,7 @@
             </a>
         </p>
         <p class="extra">
-            <span itemprop="material">{{ work.data.extra }}</span>
+            <span itemprop="material">{{ work.data.extra }}</span>{% if work.data.size %},{% endif %}
             <span itemprop="size">{{ work.data.size }}</span>
         </p>
     </div>
