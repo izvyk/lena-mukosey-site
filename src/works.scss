@@ -36,8 +36,6 @@ main {
 .workInfo {
     display: block;
     height: fit-content;
-    position: sticky;
-    bottom: 0;
     margin-top: calc(-1 * var.$defaultGap / 4);
     padding: calc(var.$defaultGap / 2);
     text-align: end;
@@ -182,6 +180,9 @@ main {
         margin-block: auto calc(-1 * var.$defaultGap);
         text-align: initial;
         padding-bottom: var.$defaultGap;
+        
+        position: sticky;
+        bottom: 0;
 
         .short {
             display: flex;
