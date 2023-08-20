@@ -1,5 +1,5 @@
 ---
-title: 'Lena Mukosey - info'
+title: 'Lena Mukosey Art: bio'
 layout: 'info.njk'
 
 avatarPhoto: 'lena-mukosey-avatar.jpg'
