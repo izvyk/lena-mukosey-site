@@ -1,7 +1,15 @@
 <div class="card" itemscope itemtype="https://schema.org/CreativeWork">
     <div class="imageContainer">
+        {% set imageAlt %}
+            {# {% if work.data.titleEnglish %}
+                {{ work.data.titleEnglish }}
+            {% else %}
+                {{ work.data.title | transliterate }}
+            {% endif %} #}
+            {{ work.data.title }}
+        {% endset %}
         {% image work.data.images[0],
-            "Alt!",
+            imageAlt,
             [135, 220, 405, 660],
             "(max-width: 620px) calc((100% - 3 * 20px) / 2), (max-width: 820px) calc((100% - 4 * 20px) / 3), (max-width: 1019px) calc((100% - 5 * 20px) / 4), (max-width: 1219px) calc((100% - 6 * 20px) / 5), calc((100% - 7 * 20px) / 6)"
         %}
