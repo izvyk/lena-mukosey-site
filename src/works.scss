@@ -10,22 +10,12 @@ $workDescriptionExtraFontSize: 0.9rem;
 $workInfoWidth: 28ch;
 $workInfoPadding: calc(var.$defaultGap / 4) calc(var.$defaultGap / 2) calc(var.$defaultGap / 2);
 
-$workInfoTextHeight: calc($workDescriptionTitleFontSize + $workDescriptionExtraFontSize);
-$workInfoHeight: calc(var.$defaultGap + $workInfoTextHeight);
-
-$imagesContainerHeightMobileVH: calc(100vh - header.$height - $workInfoHeight);
-$imagesContainerHeightMobileSVH: calc(100svh - header.$height - $workInfoHeight);
+$imagesContainerHeightMobileVH: calc(100vh - header.$height - 2 * var.$defaultGap);
+$imagesContainerHeightMobileSVH: calc(100svh - header.$height - 2 * var.$defaultGap);
 $imagesContainerHeightDesktopVH: calc(100vh - 2 * var.$defaultGap);
 $imagesContainerHeightDesktopSVH: calc(100svh - 2 * var.$defaultGap);
 
 $worksGap: var.$defaultGap;
-
-footer {
-    #text {
-        margin-inline: calc(var.$defaultGap / 2);
-        text-align: end;
-    }
-}
 
 main {
     margin-top: calc(-1 * var.$defaultGap);
