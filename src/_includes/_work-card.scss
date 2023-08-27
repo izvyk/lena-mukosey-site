@@ -23,6 +23,7 @@ $cardZindex: 0; // not used directly yet
     }
 
     .description {
+        margin-top: calc(var.$defaultGap / 5);
 
         .title {
             margin: 0;

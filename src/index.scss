@@ -17,7 +17,7 @@ main {
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var.$defaultGap;
+    gap: calc(1.5 * var.$defaultGap) var.$defaultGap;
 
     .card {
         a {
