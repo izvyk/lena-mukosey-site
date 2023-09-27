@@ -9,6 +9,8 @@ $height: clamp($minHeight, $preferredHeight, $maxHeight);
 
 $zindex: 2;
 
+$infoIconSize: 19px;
+
 header {
     display: flex;
     position: sticky;
@@ -36,10 +38,13 @@ header {
     }
 
     .info {
-        height: 19px;
+        height: $infoIconSize;
         aspect-ratio: 1;
-        margin-left: 6px;
-        margin-top: 6px;
+
+        padding: calc(($height - $infoIconSize) / 4);
+        margin: calc(($height - $infoIconSize) / -4);
+        margin-left: 0;
+        margin-top: calc(($height - $infoIconSize) / -4 + 6px);
         
         svg {
             display: block;
