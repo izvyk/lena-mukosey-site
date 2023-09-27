@@ -42,6 +42,17 @@ main {
             min-width: work-card.$minCardDesktopWidth;
             max-width: work-card.$maxCardDesktopWidth;
             aspect-ratio: 1;
+
+            a span {
+                transition: outline-offset .3s;
+                outline: 0px solid #eee;
+
+                &:hover {
+                    outline: var.$focusOutline;
+                    outline-style: solid;
+                    outline-offset: var.$focusOffset;
+                }
+            }
         }
     }
 }
