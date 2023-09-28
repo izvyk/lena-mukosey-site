@@ -7,6 +7,6 @@ images: ['зависть.jpg']
 extra: 'бумага, тушь'
 size: 'A3'
 # size: '29.7 x 42 cm'
-# display: false
+display: false
 # text: ''
 ---
