@@ -71,9 +71,9 @@ main {
     max-height: $imagesContainerHeightMobileSVH;
 
     // Just a fallback: scrollbar width causes problems
-    max-width: 100vw;
-    max-width: -webkit-fill-available;
-    max-width: -moz-available;
+    // max-width: 100%;
+    // max-width: -webkit-fill-available;
+    // max-width: -moz-available;
 
     overflow-y: hidden;
     overflow-x: auto;
@@ -85,9 +85,9 @@ main {
 
     .imageWrapper {
         max-height: inherit;
-        max-width: inherit;
+        max-width: 100%;
         height: fit-content;
-        width: fit-content;
+        min-width: fit-content;
 
         position: relative;
         .trueImage {
