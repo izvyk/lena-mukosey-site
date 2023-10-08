@@ -137,11 +137,21 @@ module.exports = function (eleventyConfig) {
     </picture>`;
 	});
 
-  eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true) {
+  eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true, annotation="") {
 		// if(alt === undefined) {
 		// 	// You bet we throw an error on missing alt (alt="" works okay)
 		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
 		// }
+    
+    annotationBlock = "";
+
+    if (annotation) {
+      annotationBlock = `
+        <div class="imageCounter">
+          ${annotation}
+        </div>
+        `;
+    }
 
 		let metadata = await Image("./src/assets/images/" + src, {
 			widths,
@@ -171,8 +181,9 @@ module.exports = function (eleventyConfig) {
         <img
           class="placeholder"
           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${highsrc.width}' height='${highsrc.height}'%3E%3Crect width='100%25' height='100%25' fill='%230000'/%3E%3C/svg%3E"
-        >
-      </div>`;
+        >` + 
+        annotationBlock
+      + '</div>';
 	});
 
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {

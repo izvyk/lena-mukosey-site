@@ -8,16 +8,27 @@ layout: 'base.njk'
         <div class="workContainer" tabindex="0" itemscope itemtype="https://schema.org/CreativeWork">
             <div class="imagesContainer" tabindex="-1">
                 {% asyncEach image in work.data.images %}
+                    {% if work.data.images | length > 1 %}
+                        {% set annotation = loop.index + ' / ' + (work.data.images | length) %}
+                    {% endif %}
+
                     {% imageWithPlaceholder image,
                         "",
                         [285, 570, 855, 1097, 2194, 3291],
-                        "(max-width: 650px) 100vw, calc(100vw - 28ch - 4 * 20px)"
+                        "(max-width: 650px) 100vw, calc(100vw - 28ch - 4 * 20px)",
+                        true,
+                        annotation
                     %}
                     {# <img src="{{ work.data.image }}" alt="Alt!"> #}
                 {% endeach %}
             </div>
             <div class="workInfo">
                 <div class="workDescription desktop" itemprop="description">
+                    {% if work.data.images | length > 1 %}
+                        Серия из {{ work.data.images | length }} работ
+                        <br>
+                    {% endif %}
+                        
                     {{ work.data.text }}
                 </div>
                 <div class="short">

@@ -98,6 +98,24 @@ main {
             width: 100%;
             background-color: var.$defaultDarkerBackgroundColor;
         }
+
+        .placeholder {
+            z-index: 1;
+            position: relative;
+        }
+
+        .imageCounter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.5em;
+
+            padding: 1px 3px;
+            margin: -1px -3px;
+
+            border-radius: 3px;
+            background: #ffffffc0;
+        }
     }
 
     img {
