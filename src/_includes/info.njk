@@ -11,7 +11,7 @@
         <div class="textAndContactsContainer">
             <div class="contactsContainer">
                 {% for item in social %}
-                    <div>{{ item.name }}: <a itemprop="sameAs" href="{{ item.link }}" {% if item.target_blank %}target="_blank"{% endif %}>{{ item.text }}</a></div>
+                    <div>{{ item.name }}{% if item.name %}: {% endif %}<a itemprop="sameAs" href="{{ item.link }}" {% if item.target_blank %}target="_blank"{% endif %}>{{ item.text }}</a></div>
                 {% endfor %}
             </div>
             <span class="text" itemprop="description">{{ text }}</span>
