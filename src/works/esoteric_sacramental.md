@@ -1,6 +1,6 @@
 ---
 title: 'Тайный ритуал'
-titleEnglish: 'Esteric sacramental'
+titleEnglish: 'Esoteric sacramental'
 # dateStart: 2020
 dateEnd: 2022
 images: ['тайный_ритуал.jpg']
