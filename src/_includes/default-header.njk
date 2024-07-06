@@ -1,6 +1,11 @@
 <header {% if '/info' not in page.url %}itemscope itemtype="https://schema.org/Person"{% endif %}>
-    <a class="name" href="/"><span itemprop="name">Lena Mukosey</span></a>
-    <a class="info" href="/info" itemprop="sameAs">
+    <a class="name" href="{{ "/" | locale_url }}"><span itemprop="name">Lena Mukosey</span></a>
+    <a class="info" href="{{ "/info" | locale_url }}" itemprop="sameAs">
         {% include "../assets-inline/svg/info-icon.svg" %}
     </a>
+    <div class="langcontainer">
+        {% for link in page.url | locale_links %}
+            <a class="langbutton" href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.label}}</a>
+        {% endfor %}
+    </div>
 </header>

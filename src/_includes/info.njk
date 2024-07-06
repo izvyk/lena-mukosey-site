@@ -1,20 +1,18 @@
-{% extends "base.njk" %}
+---
+layout: 'base.njk'
+---
 
-{% block content %}
-    <main>
-        {% imageWithPlaceholder avatarPhoto,
-            avatarPhotoAlt,
-            [285, 675, 950, 1170, 1350],
-            "(min-width: 1500px) 675px, (min-width: 460px) calc(46.57vw - 14px), (min-width: 400px) calc(100vw - 40px), calc(68.75vw + 79px)",
-            lazy = false
-        %}
-        <div class="textAndContactsContainer">
-            <div class="contactsContainer">
-                {% for item in social %}
-                    <div>{{ item.name }}{% if item.name %}: {% endif %}<a itemprop="sameAs" href="{{ item.link }}" {% if item.target_blank %}target="_blank"{% endif %}>{{ item.text }}</a></div>
-                {% endfor %}
-            </div>
-            <span class="text" itemprop="description">{{ text }}</span>
-        </div>
-    </main>
-{% endblock content %}
+{% imageWithPlaceholder avatarPhoto,
+    avatarPhotoAlt,
+    [285, 675, 950, 1170, 1350],
+    "(min-width: 1500px) 675px, (min-width: 460px) calc(46.57vw - 14px), (min-width: 400px) calc(100vw - 40px), calc(68.75vw + 79px)",
+    lazy = false
+%}
+<div class="textAndContactsContainer">
+    <div class="contactsContainer">
+        {% for item in social %}
+            <div>{{ item.name }}{% if item.name %}: {% endif %}<a itemprop="sameAs" href="{{ item.link }}" {% if item.target_blank %}target="_blank"{% endif %}>{{ item.text }}</a></div>
+        {% endfor %}
+    </div>
+    <span class="text" itemprop="description">{{ text }}</span>
+</div>

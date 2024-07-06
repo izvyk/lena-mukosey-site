@@ -3,6 +3,7 @@ const htmlmin = require("html-minifier");
 const posthtml = require('posthtml');
 const minifyClassnames = require('posthtml-minify-classnames');
 const pluginInlineSass = require('eleventy-plugin-inline-sass');
+const { EleventyI18nPlugin } = require("@11ty/eleventy");
 
 function transliterate(letter) {
   if (letter.length != 1) {
@@ -97,6 +98,11 @@ module.exports = function (eleventyConfig) {
         removeComments: true,
         collapseWhitespace: true,
       });
+  eleventyConfig.addPlugin(EleventyI18nPlugin, {
+		// any valid BCP 47-compatible language tag is supported
+		defaultLanguage: "ru", // Required, this site uses "en"
+    errorMode: "allow-fallback",
+	});
 
       return minified;
     }

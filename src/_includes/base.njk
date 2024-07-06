@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" dir="{{ dir }}">
 <head>
     {% block head %}
         <meta charset="UTF-8">
@@ -23,6 +23,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;500&display=swap" rel="stylesheet">
+
+        <link rel="alternate" hreflang="{{ page.lang }}" href="{{ page.url }}">
+        {% for link in page.url | locale_links %}
+          <link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url }}">
+        {% endfor %}
+
         {% if scss is defined %}
             {# <link rel="stylesheet" type="text/css" href="{{ style | prefixWithStylesPath | rev }}"> #}
             <style>

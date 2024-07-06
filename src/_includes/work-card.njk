@@ -16,7 +16,7 @@
     </div>
     <div class="description">
         <p class="title">
-            <a href="/works#{% if work.data.titleEnglish %}{{ work.data.titleEnglish | slugify }}{% else %}{{ work.data.title | transliterate | slugify }}{% endif %}" itemprop="url">
+            <a href="{{ "/works/" | locale_url }}#{% if work.data.titleEnglish %}{{ work.data.titleEnglish | slugify }}{% else %}{{ work.data.title | transliterate | slugify }}{% endif %}" itemprop="url">
                 <span itemprop="name">{{ work.data.title }}</span>
                 <span class="a"></span>
             </a>
