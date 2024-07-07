@@ -42,8 +42,8 @@ layout: 'base.njk'
                         </span>
                     </div>
                     <div class="extra">
-                        <span itemprop="material">{{ work.data.extra }}</span>,
-                        <span itemprop="size">{{ work.data.size }}</span>
+                        <span itemprop="material">{{ work.data.extra[page.lang] }}</span>,
+                        <span itemprop="size">{{ work.data.size | size_i18n(page.lang) }}</span>
                     </div>
                 </div>
             </div>

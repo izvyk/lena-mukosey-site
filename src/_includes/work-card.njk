@@ -1,6 +1,6 @@
 <div class="card" itemscope itemtype="https://schema.org/CreativeWork">
     <div class="imageContainer">
-        {% set imageAlt %}{{ work.data.title }}{% endset %}
+        {% set imageAlt %}{{ work.data.title[page.lang] }}{% endset %}
         {% image work.data.images[0],
             imageAlt,
             [135, 220, 405, 660],
@@ -15,7 +15,7 @@
             </a>
         </p>
         <p class="extra">
-            <span itemprop="material">{{ work.data.extra }}</span>{% if work.data.size %}, <span itemprop="size">{{ work.data.size | size_i18n(page.lang) }}</span>{% endif %}
+            <span itemprop="material">{{ work.data.extra[page.lang] }}</span>{% if work.data.size %}, <span itemprop="size">{{ work.data.size | size_i18n(page.lang) }}</span>{% endif %}
         </p>
     </div>
     {# <a tabindex="-1" href="/works#{{ work.data.titleEnglish | slugify }}"><span tabindex="0"></span></a> #}
