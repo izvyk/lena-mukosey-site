@@ -33,10 +33,13 @@ layout: 'base.njk'
                 <div class="short">
                     <div class="title">
                         <span class="name" itemprop="name">{{ work.data.title[page.lang] }}</span>,
-                        {% if work.data.dateStart %}
-                            {{ work.data.dateStart }} -
-                        {% endif %}
-                        <span itemprop="dateCreated">{{ work.data.dateEnd }}</span>
+                        <span class="nowrap">
+                            {% if work.data.dateStart %}
+                                {{ work.data.dateStart }} – 
+                                {# en dash is user for dates (U+2013) #}
+                            {% endif %}
+                            <span itemprop="dateCreated">{{ work.data.dateEnd }}</span>
+                        </span>
                     </div>
                     <div class="extra">
                         <span itemprop="material">{{ work.data.extra }}</span>,
