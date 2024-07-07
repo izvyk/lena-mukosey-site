@@ -166,7 +166,12 @@ module.exports = function (eleventyConfig) {
     return '/assets/images/' + path;
   });
 
-  eleventyConfig.addFilter('size_i18n', (size, lang) => {
+  eleventyConfig.addFilter('size_i18n', (size, lang, workPath) => {
+    if (!size) {
+      console.error(`An artwork ${workPath} does not have a size defined!`);
+      return;
+    }
+
     let splitted = size.split(' ');
 
     let unit = splitted[splitted.length - 1];
