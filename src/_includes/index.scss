@@ -5,6 +5,11 @@
 @use 'footer';
 @use 'work-card';
 
+$minCardDesktopWidth: 170px;
+
+$cardContainerGapHorizontal: var.$defaultGap;
+$cardContainerPaddingHorizontal: var.$defaultGap;
+
 main {
     min-height: calc(100vh - header.$height - footer.$height);
     min-height: calc(100svh - header.$height - footer.$height);
@@ -13,11 +18,11 @@ main {
 .cardContainer {
     padding-top: calc(var.$focusOffset + var.$focusOutlineWidth);
     position: relative;
-    padding-inline: var.$defaultGap;
+    padding-inline: $cardContainerPaddingHorizontal;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: calc(1.5 * var.$defaultGap) var.$defaultGap;
+    gap: calc(1.5 * var.$defaultGap) $cardContainerGapHorizontal;
 
     .card {
         a {
@@ -33,26 +38,38 @@ main {
     }
 }
 
-@media (min-width: work-card.$maxCardWidth) {
-    .cardContainer {
-        grid-template-columns: repeat(auto-fit, minmax(work-card.$minCardDesktopWidth, 1fr));
-        
-        .card {
-            margin: 0;
-            min-width: work-card.$minCardDesktopWidth;
-            max-width: work-card.$maxCardDesktopWidth;
-            aspect-ratio: 1;
+@media (hover: hover) {
+    .card {
+        a span {
+            transition: outline-offset .3s;
+            outline: 0px solid #eee;
 
-            a span {
-                transition: outline-offset .3s;
-                outline: 0px solid #eee;
-
-                &:hover {
-                    outline: var.$focusOutline;
-                    outline-style: solid;
-                    outline-offset: var.$focusOffset;
-                }
+            &:hover {
+                outline: var.$focusOutline;
+                outline-style: solid;
+                outline-offset: var.$focusOffset;
             }
         }
+    }
+}
+
+// Prevents overflow on narrow screens
+@media (max-width: 350px) {
+    .card {
+        .description {
+            font-size: .7em;
+        }
+    }
+
+    header {
+        font-size: 20px;
+    }
+}
+
+$dynamicCardNumberWidth: calc(2 * $cardContainerPaddingHorizontal + 2 * $cardContainerGapHorizontal + 3 * $minCardDesktopWidth);
+
+@media (min-width: $dynamicCardNumberWidth) {
+    .cardContainer {
+        grid-template-columns: repeat(auto-fit, minmax($minCardDesktopWidth, 1fr));
     }
 }

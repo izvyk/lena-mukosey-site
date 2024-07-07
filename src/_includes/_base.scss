@@ -7,12 +7,12 @@ main {
     padding: 0;
     font-family: 'Roboto Slab', Cambria, Cochin, Georgia, Times, serif;
     font-weight: 200;
+    min-width: var.$minPageWidth;
 }
 
 body,
 main {
     margin-inline: auto;
-    min-width: var.$minPageWidth;
     max-width: var.$maxPageWidth;
 }
 

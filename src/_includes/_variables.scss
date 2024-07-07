@@ -3,9 +3,9 @@ $defaultGap: 20px;
 $minPageWidth: 250px;
 $maxPageWidth: 1410px;
 
-$desktopWorksListBreakpoint: 440px;
-$desktopSingleWorkBreakpoint: 650px;
-$desktopInfoBreakpoint: 550px;
+// $desktopWorksListBreakpoint: 440px;
+$desktopSingleWorkBreakpoint: 650px; // works
+$desktopInfoBreakpoint: 550px; // info
 
 $focusOutlineWidth: 2px;
 $focusOutline: $focusOutlineWidth dashed rgb(50%, 50%, 50%);

@@ -1,17 +1,10 @@
 @use 'variables' as var;
 
-$maxCardWidth: var.$desktopWorksListBreakpoint;
-$minCardMobileWidth: 180px;
-$minCardDesktopWidth: 180px;
-$maxCardDesktopWidth: 380px;
 $cardZindex: 0; // not used directly yet
 
 .card {
     position: relative;
     overflow-wrap: break-word;
-
-    // min-width: $minCardMobileWidth;
-    max-width: $maxCardWidth;
 
     .imageContainer {
         background-color: var.$defaultDarkerBackgroundColor;
