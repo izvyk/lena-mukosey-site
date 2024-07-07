@@ -5,7 +5,12 @@
     </a>
     <div class="langcontainer">
         {% for link in page.url | locale_links %}
-            <a class="langbutton" href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.label}}</a>
+            <a class="langbutton" 
+                href="{{ link.url }}"
+                lang="{{ link.lang }}"
+                hreflang="{{ link.lang }}"
+                onclick="window.location='{{ link.url }}' + window.location.hash; event.preventDefault();"
+                >{{ link.label }}</a>
         {% endfor %}
     </div>
 </header>
