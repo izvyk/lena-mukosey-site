@@ -18,5 +18,8 @@
     "html-minifier": "^4.0.0",
     "posthtml": "^0.16.6",
     "posthtml-minify-classnames": "^0.3.0"
+  },
+  "dependencies": {
+    "eleventy-plugin-i18n": "^0.1.3"
   }
 }

@@ -5,82 +5,8 @@ const minifyClassnames = require('posthtml-minify-classnames');
 const pluginInlineSass = require('eleventy-plugin-inline-sass');
 const { EleventyI18nPlugin } = require("@11ty/eleventy");
 
-function transliterate(letter) {
-  if (letter.length != 1) {
-    throw Error(`Invalid argument: ${letter}`);
-  }
-
-  switch (letter) {
-    case 'а':
-      return 'a';
-    case 'б':
-      return 'b';
-    case 'в':
-      return 'v';
-    case 'г':
-      return 'g';
-    case 'д':
-      return 'd';
-    case 'е':
-      return 'ye';
-    case 'ё':
-      return 'yo';
-    case 'ж':
-      return 'z';
-    case 'з':
-      return 'z';
-    case 'и':
-      return 'i';
-    case 'й':
-      return 'y';
-    case 'к':
-      return 'k';
-    case 'л':
-      return 'l';
-    case 'м':
-      return 'm';
-    case 'н':
-      return 'n';
-    case 'о':
-      return 'o';
-    case 'п':
-      return 'p';
-    case 'р':
-      return 'r';
-    case 'с':
-      return 's';
-    case 'т':
-      return 't';
-    case 'у':
-      return 'u';
-    case 'ф':
-      return 'f';
-    case 'х':
-      return 'h';
-    case 'ц':
-      return 'c';
-    case 'ч':
-      return 'ch';
-    case 'ш':
-      return 'sh';
-    case 'щ':
-      return 'sh';
-    case 'ъ':
-      return '';
-    case 'ы':
-      return 'y';
-    case 'ь':
-      return '';
-    case 'э':
-      return 'e';
-    case 'ю':
-      return 'yu';
-    case 'я':
-      return 'ya';
-    default:
-      return letter;
-  }
-}
+const i18n = require('eleventy-plugin-i18n');
+const translations = require('./src/_data/i18n/');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginInlineSass, {
@@ -89,25 +15,37 @@ module.exports = function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addTransform("htmlmin", async function(content) {
-    if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
-      const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
-
-      let minified = htmlmin.minify(html, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true,
-      });
   eleventyConfig.addPlugin(EleventyI18nPlugin, {
 		// any valid BCP 47-compatible language tag is supported
-		defaultLanguage: "ru", // Required, this site uses "en"
+		defaultLanguage: "ru", // Required, this site uses "ru"
     errorMode: "allow-fallback",
 	});
 
-      return minified;
+  eleventyConfig.addPlugin(i18n, {
+    translations,
+    fallbackLocales: {
+      // Required as i18n doesn't like permalinks
+      // This should match the default language (one with permalinks)
+      '*': 'ru'
     }
+  });
 
-    return content;
+  eleventyConfig.addTransform("htmlmin", async function(content) {
+    if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
+      return content;
+    }
+    
+    const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
+
+    let minified = htmlmin.minify(html, {
+      useShortDoctype: true,
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyCSS: true,
+      minifyJS: true,
+    });
+
+    return minified;
   });
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true) {
@@ -224,16 +162,19 @@ module.exports = function (eleventyConfig) {
     return sortedWorks;
   });
 
-  eleventyConfig.addFilter('transliterate', (string) => {
-    let transliteration = '';
-    for (let i = 0; i < string.length; i++) {
-      transliteration += transliterate(string.charAt(i).toLowerCase());
-    };
-    return transliteration;
-  });
-
   eleventyConfig.addFilter('prefixWithAssetsPath', (path) => {
     return '/assets/images/' + path;
+  });
+
+  eleventyConfig.addFilter('size_i18n', (size, lang) => {
+    let splitted = size.split(' ');
+
+    let unit = splitted[splitted.length - 1];
+    if (unit in translations.size && lang in translations.size[unit]) {
+      splitted[splitted.length - 1] = translations.size[unit][lang];
+    }
+    
+    return splitted.join(' ');
   });
 
   eleventyConfig.addPassthroughCopy('./src/assets/favicon/');
