@@ -28,7 +28,7 @@ layout: 'base.njk'
                         <br>
                     {% endif %}
                         
-                    {{ work.data.text }}
+                    {{ work.data.text[page.lang] }}
                 </div>
                 <div class="short">
                     <div class="title">
@@ -48,7 +48,7 @@ layout: 'base.njk'
                 </div>
             </div>
             <div class="workDescription mobile" itemprop="description">
-                {{ work.data.text }}
+                {{ work.data.text[page.lang] }}
             </div>
         </div>
     </div>
