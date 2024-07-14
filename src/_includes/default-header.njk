@@ -1,16 +1,15 @@
 <header {% if '/info' not in page.url %}itemscope itemtype="https://schema.org/Person"{% endif %}>
     <a class="name" href="{{ "/" | locale_url }}"><span itemprop="name">Lena Mukosey</span></a>
-    <a class="info" href="{{ "/info/" | locale_url }}" itemprop="sameAs">
+    <a class="headerbutton" href="{{ "/info/" | locale_url }}" itemprop="sameAs">
         {% include "../assets-inline/svg/info-icon.svg" %}
     </a>
-    <div class="langcontainer">
-        {% for link in page.url | locale_links %}
-            <a class="langbutton" 
-                href="{{ link.url }}"
-                lang="{{ link.lang }}"
-                hreflang="{{ link.lang }}"
-                onclick="window.location='{{ link.url }}' + window.location.hash; event.preventDefault();"
-                >{{ link.label }}</a>
-        {% endfor %}
-    </div>
+    {% for link in page.url | locale_links %}
+        <a class="headerbutton"
+            href="{{ link.url }}"
+            lang="{{ link.lang }}"
+            hreflang="{{ link.lang }}"
+            title="{{ link.label }}"
+            onclick="window.location='{{ link.url }}' + window.location.hash; event.preventDefault();"
+            >{% include "../assets-inline/svg/globe-language.svg" %}</a>
+    {% endfor %}
 </header>

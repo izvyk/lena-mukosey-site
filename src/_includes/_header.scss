@@ -9,7 +9,10 @@ $height: clamp($minHeight, $preferredHeight, $maxHeight);
 
 $zindex: 2;
 
-$infoIconSize: 19px;
+$headerButtonSize: 19px;
+$headerButtonTopMargin: 6px;
+
+$headerGap: calc(($height - $headerButtonSize) / 4);
 
 header {
     display: flex;
@@ -21,6 +24,7 @@ header {
     box-sizing: border-box;
     z-index: $zindex;
     align-items: center;
+    gap: $headerGap;
 
     padding-inline: var.$defaultGap;
     background-color: var.$defaultBackgroundColor;
@@ -37,25 +41,16 @@ header {
         color: var.$defaultTextColor;
     }
 
-    .info {
-        height: $infoIconSize;
+    .headerbutton {
+        height: $headerButtonSize;
         aspect-ratio: 1;
-
-        padding: calc(($height - $infoIconSize) / 4);
-        margin: calc(($height - $infoIconSize) / -4);
-        margin-left: 0;
-        margin-top: calc(($height - $infoIconSize) / -4 + 6px);
+        margin-top: $headerButtonTopMargin;
         
         svg {
             display: block;
             overflow: visible;
+            height: inherit;
+            width: inherit;
         }
-    }
-
-    .langcontainer {
-        margin-left: auto;
-        text-decoration: none;
-        font-weight: lighter;
-        font-size: .7em;
     }
 }
