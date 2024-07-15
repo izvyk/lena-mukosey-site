@@ -30,23 +30,26 @@ module.exports = function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addTransform("htmlmin", async function(content) {
-    if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
-      return content;
-    }
-    
-    const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
+  // Minify if 'dev' environmental variable is not set
+  if (!process.env.dev) {
+    eleventyConfig.addTransform("htmlmin", async function(content) {
+      if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
+        return content;
+      }
 
-    let minified = htmlmin.minify(html, {
-      useShortDoctype: true,
-      removeComments: true,
-      collapseWhitespace: true,
-      minifyCSS: true,
-      minifyJS: true,
+      const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
+
+      let minified = htmlmin.minify(html, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        minifyCSS: true,
+        minifyJS: true,
+      });
+
+      return minified;
     });
-
-    return minified;
-  });
+  }
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true) {
 		// if(alt === undefined) {
