@@ -134,33 +134,26 @@ module.exports = function (eleventyConfig) {
 	});
 
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
-    const sortedWorks = collectionApi.getFilteredByTag("work").sort((a, b) => b.data.dateEnd - a.data.dateEnd);
+    let sortedWorks = collectionApi
+      .getFilteredByTag("work")
+      .filter(work => !((Object.hasOwn(work.data, 'display')) && (work.data.display == false || work.data.display == 'no')))
+      .sort((a, b) => b.data.dateEnd - a.data.dateEnd);
 
-    for (let i = 0; i < sortedWorks.length; i++) {
-      if (Object.hasOwn(sortedWorks[i].data, 'display') && 
-      (sortedWorks[i].data.display == false || sortedWorks[i].data.display == 'no')) {
-        sortedWorks.splice(i, 1); 
-      }
-    }
-
-    let explicitlyOrderedItems = [];
-    for (let i = 0; i < sortedWorks.length; i++) {
-      if (Object.hasOwn(sortedWorks[i].data, 'order')) {
-        explicitlyOrderedItems.push(sortedWorks.splice(i, 1)[0]);
-      }
-    }
-
-    explicitlyOrderedItems.forEach(i => {
-      if (i.data.order == -1) {
-        sortedWorks.push(i);
-      } else if (i.data.order > 0) {
-        sortedWorks.splice(i.data.order - 1, 0, i);
-      } else if (i.data.order < 0) {
-        sortedWorks.splice(i.data.order + 1, 0, i);
-      } else {
-        sortedWorks.splice(i.data.order, 0, i);
-      }
-    });
+    sortedWorks
+      .filter(work => Object.hasOwn(work.data, 'order'))
+      .sort((a, b) => a.data.order - b.data.order)
+      .forEach(work => {
+        sortedWorks = sortedWorks.filter(i => i !== work);
+        if (work.data.order == -1) {
+          sortedWorks.push(work);
+        } else if (work.data.order > 0) {
+          sortedWorks.splice(work.data.order - 1, 0, work);
+        } else if (work.data.order < 0) {
+          sortedWorks.splice(work.data.order + 1, 0, work);
+        } else {
+          sortedWorks.splice(work.data.order, 0, work);
+        }
+      });
 
     return sortedWorks;
   });
