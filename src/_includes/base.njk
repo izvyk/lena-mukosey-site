@@ -36,6 +36,15 @@
             </style>
         {% endif %}
     {% endblock %}
+
+    {% if script is defined %}
+        {% set js %}
+            {% include "../assets-inline/script/" + script %}
+        {% endset %}
+        <script>
+            {{ js | safe }}
+        </script>
+    {% endif %}
 </head>
 <body {% if '/info' in page.url %} itemscope itemtype="https://schema.org/Person" {% endif %}>
     {% block header %}
@@ -51,15 +60,5 @@
     {% block footer %}
         {% include 'default-footer.njk' %}
     {% endblock footer %}
-
-    {% if script is defined %}
-        {% set js %}
-            {% include "../assets-inline/script/" + script %}
-        {% endset %}
-        <script>
-            {{ js | safe }}
-        </script>
-    {% endif %}
-
 </body>
 </html>

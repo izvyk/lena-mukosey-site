@@ -13,6 +13,8 @@ $cardZindex: 0; // not used directly yet
     img {
         width: 100%;
         height: auto;
+        transition: opacity var.$defaultAnimationDuration ease-in;
+        opacity: 0; // for onload animation
     }
 
     .description {
