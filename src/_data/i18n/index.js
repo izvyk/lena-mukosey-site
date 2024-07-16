@@ -37,4 +37,12 @@ module.exports = {
             'ru': 'Лена Мукосей',
         },
     },
+    footer: {
+        copyright: {
+            name: {
+                'en': 'Mukosey',
+                'ru': 'Мукосей',
+            },
+        },
+    },
   };
