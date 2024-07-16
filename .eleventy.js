@@ -84,7 +84,7 @@ module.exports = function (eleventyConfig) {
     </picture>`;
 	});
 
-  eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true, annotation="") {
+  eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true, annotation = "", prev = false, next = false) {
 		// if(alt === undefined) {
 		// 	// You bet we throw an error on missing alt (alt="" works okay)
 		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
@@ -93,11 +93,17 @@ module.exports = function (eleventyConfig) {
     annotationBlock = "";
 
     if (annotation) {
-      annotationBlock = `
-        <div class="imageCounter">
-          ${annotation}
-        </div>
-        `;
+      annotationBlock =
+        `<div class="imageCounter">
+          <div class="imageCounterButton" ${prev ? 'onclick="this.parentNode.parentNode.parentNode.scrollLeft = this.parentNode.parentNode.previousElementSibling.offsetLeft - this.parentNode.parentNode.parentNode.firstElementChild.offsetLeft"' : ''}>
+            <div class="arrow prev ${prev ? '' : 'inactive'}"></div>
+          </div>
+          <span class="annotation">${annotation}</span>
+          <div class="imageCounterButton" ${next ? 'onclick="this.parentNode.parentNode.parentNode.scrollLeft = this.parentNode.parentNode.nextElementSibling.offsetLeft - this.parentNode.parentNode.parentNode.firstElementChild.offsetLeft"' : ''}>
+            <div class="arrow next ${next ? '' : 'inactive'}"></div>
+          </div>
+        </div>`
+        ;
     }
 
 		let metadata = await Image("./src/assets/images/" + src, {

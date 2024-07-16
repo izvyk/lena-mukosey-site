@@ -16,7 +16,9 @@ layout: 'base.njk'
                         [285, 570, 855, 1097, 2194, 3291],
                         "(max-width: 650px) 100vw, calc(100vw - 28ch - 3 * 20px)",
                         true,
-                        annotation
+                        annotation,
+                        not loop.first,
+                        not loop.last
                     %}
                 {% endeach %}
             </div>
