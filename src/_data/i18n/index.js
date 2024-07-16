@@ -23,12 +23,12 @@ module.exports = {
             'ru': 'Лена Мукосей',
         },
         description: {
-            'en': 'Lena Mukosey (ducklusha): graphics, painting, illustration, body art',
-            'ru': 'Лена Мукосей: графика, живопись, иллюстрация, боди-арт',
+            'en': 'Lena Mukosey (ducklusha): art, graphics, painting, illustration, body art',
+            'ru': 'Лена Мукосей: жудожник, графика, живопись, иллюстрация, боди-арт',
         },
         keywords: {
             'en': 'lena mukosey, art, artist, artwork, contemporary art, contemporary artist, abstract art, graphics, painting, illustration, body art, ducklusha',
-            'ru': 'лена мукосей, графика, живопись, иллюстрация, боди-арт, современное искусство, искусство, современный художник, современная художница, художница',
+            'ru': 'лена мукосей, художник, графика, живопись, иллюстрация, боди-арт, современное искусство, искусство, современный художник, современная художница, художница',
         },
     },
   };
