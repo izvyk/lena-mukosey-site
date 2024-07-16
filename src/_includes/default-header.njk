@@ -4,12 +4,12 @@
         {% include "../assets-inline/svg/info-icon.svg" %}
     </a>
     {% for link in page.url | locale_links %}
-        <a class="headerbutton"
+        <a class="headerbutton langbutton"
             href="{{ link.url }}"
             lang="{{ link.lang }}"
             hreflang="{{ link.lang }}"
             title="{{ link.label }}"
             onclick="window.location='{{ link.url }}' + window.location.hash; event.preventDefault();"
-            >{% include "../assets-inline/svg/globe-language.svg" %}</a>
+            >{{ link.lang | toUpperCase }}</a>
     {% endfor %}
 </header>

@@ -53,4 +53,18 @@ header {
             width: inherit;
         }
     }
+
+    .langbutton {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 500;
+        background-color: black;
+        border-radius: 50px;
+        padding: 3px;
+        font-size: 9px;
+        // height: 19px;
+        box-sizing: border-box;
+        // aspect-ratio: 1;
+        // margin-top: 5px;
+    }
 }

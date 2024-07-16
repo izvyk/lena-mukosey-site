@@ -168,6 +168,10 @@ module.exports = function (eleventyConfig) {
     return '/assets/images/' + path;
   });
 
+  eleventyConfig.addFilter('toUpperCase', (str) => {
+    return str.toUpperCase();
+  });
+
   eleventyConfig.addFilter('size_i18n', (size, lang, workPath) => {
     if (!size) {
       console.error(`An artwork ${workPath} does not have a size defined!`);
