@@ -90,7 +90,7 @@ main {
     scroll-behavior: smooth;
 
     //hiding scrollbar
-    scrollbar-width: 0;
+    scrollbar-width: none;
     -ms-overflow-style: none;  /* IE and Edge */
     &::-webkit-scrollbar {
         -webkit-appearance: none;
