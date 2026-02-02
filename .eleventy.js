@@ -2,7 +2,6 @@ const Image = require("@11ty/eleventy-img");
 const htmlmin = require("html-minifier");
 const posthtml = require('posthtml');
 const minifyClassnames = require('posthtml-minify-classnames');
-const pluginInlineSass = require('eleventy-plugin-inline-sass');
 
 function transliterate(letter) {
   if (letter.length != 1) {
@@ -82,11 +81,7 @@ function transliterate(letter) {
 }
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addPlugin(pluginInlineSass, {
-    compiler: {
-      loadPaths: ['src/_includes']
-    }
-  });
+  eleventyConfig.addWatchTarget("src/**/*.scss");
 
   eleventyConfig.addTransform("htmlmin", async function(content) {
     if(this.page.outputPath && this.page.outputPath.endsWith(".html")) {
@@ -110,31 +105,36 @@ module.exports = function (eleventyConfig) {
 		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
 		// }
 
-		let metadata = await Image("./src/assets/images/" + src, {
-			widths,
-			formats: ['avif', 'jpeg'],
-      outputDir: 'public/assets/images',
-      urlPath: '/assets/images',
-      svgShortCircuit: true,
-		});
+    try {
+      let metadata = await Image("./src/assets/images/" + src, {
+        widths,
+        formats: ['avif', 'jpeg'],
+        outputDir: 'public/assets/images',
+        urlPath: '/assets/images',
+        svgShortCircuit: true,
+      });
 
-		let lowsrc = metadata.jpeg[0];
-		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+      let lowsrc = metadata.jpeg[0];
+      let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
 
-    return `<picture>
-    ${Object.values(metadata).map(imageFormat => {
-    return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-  }).join("\n")}
-      <img
-        src="${lowsrc.url}"
-        width="${highsrc.width}"
-        height="${highsrc.height}"
-        alt="${alt}"
-        ${lazy === true ? 'loading="lazy"' : ""}
-        decoding="async"
-        itemprop="image"
-        >
-    </picture>`;
+      return `<picture>
+      ${Object.values(metadata).map(imageFormat => {
+      return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+    }).join("\n")}
+        <img
+          src="${lowsrc.url}"
+          width="${highsrc.width}"
+          height="${highsrc.height}"
+          alt="${alt}"
+          ${lazy === true ? 'loading="lazy"' : ""}
+          decoding="async"
+          itemprop="image"
+          >
+      </picture>`;
+    } catch (e) {
+      console.warn(`[11ty] Image not found: ${src}`);
+      return "";
+    }
 	});
 
   eleventyConfig.addNunjucksAsyncShortcode("imageWithPlaceholder", async function(src, alt, widths = ['auto'], sizes = "100vw", lazy = true, annotation="") {
@@ -153,37 +153,42 @@ module.exports = function (eleventyConfig) {
         `;
     }
 
-		let metadata = await Image("./src/assets/images/" + src, {
-			widths,
-			formats: ['avif', 'jpeg'],
-      outputDir: 'public/assets/images',
-      urlPath: '/assets/images',
-      svgShortCircuit: true,
-		});
+    try {
+      let metadata = await Image("./src/assets/images/" + src, {
+        widths,
+        formats: ['avif', 'jpeg'],
+        outputDir: 'public/assets/images',
+        urlPath: '/assets/images',
+        svgShortCircuit: true,
+      });
 
-		let lowsrc = metadata.jpeg[0];
-		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+      let lowsrc = metadata.jpeg[0];
+      let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
 
-    return `
-      <div class="imageWrapper">
-        <picture>
-          ${Object.values(metadata).map(imageFormat => {
-            return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-          }).join("\n")}
-            <img
-              class="trueImage"
-              src="${lowsrc.url}"
-              alt="${alt}"
-              ${lazy === true ? 'loading="lazy"' : ""}
-              decoding="async"
-              itemprop="image">
-          </picture>
-        <img
-          class="placeholder"
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${highsrc.width}' height='${highsrc.height}'%3E%3Crect width='100%25' height='100%25' fill='%230000'/%3E%3C/svg%3E"
-        >` + 
-        annotationBlock
-      + '</div>';
+      return `
+        <div class="imageWrapper">
+          <picture>
+            ${Object.values(metadata).map(imageFormat => {
+              return `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
+            }).join("\n")}
+              <img
+                class="trueImage"
+                src="${lowsrc.url}"
+                alt="${alt}"
+                ${lazy === true ? 'loading="lazy"' : ""}
+                decoding="async"
+                itemprop="image">
+            </picture>
+          <img
+            class="placeholder"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${highsrc.width}' height='${highsrc.height}'%3E%3Crect width='100%25' height='100%25' fill='%230000'/%3E%3C/svg%3E"
+          >` +
+          annotationBlock
+        + '</div>';
+    } catch (e) {
+      console.warn(`[11ty] Image not found: ${src}`);
+      return "";
+    }
 	});
 
   eleventyConfig.addCollection("worksSortedRespectingOrder", function (collectionApi) {
