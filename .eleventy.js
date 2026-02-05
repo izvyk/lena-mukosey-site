@@ -1,5 +1,5 @@
 const Image = require("@11ty/eleventy-img");
-const htmlmin = require("html-minifier");
+const htmlmin = require("html-minifier-terser");
 const posthtml = require('posthtml');
 const minifyClassnames = require('posthtml-minify-classnames');
 
