@@ -1,18 +1,21 @@
-const Image = require("@11ty/eleventy-img");
-const htmlmin = require("html-minifier");
-const posthtml = require('posthtml');
-const minifyClassnames = require('posthtml-minify-classnames');
-const pluginInlineSass = require('eleventy-plugin-inline-sass');
+const Image = require("@11ty/eleventy-img").default;
+const htmlmin = require("html-minifier-terser");
+const sass = require('sass');
 const { EleventyI18nPlugin } = require("@11ty/eleventy");
 
 const i18n = require('eleventy-plugin-i18n');
 const translations = require('./src/_data/i18n/');
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addPlugin(pluginInlineSass, {
-    compiler: {
-      loadPaths: ['src/_includes']
-    }
+  // Replacement for the unpublished eleventy-plugin-inline-sass:
+  // compiles companion .scss data files and exposes them as the `scss` key.
+  eleventyConfig.addDataExtension('scss', contents => {
+    return {
+      scss: sass.compileString(contents, {
+        style: 'compressed',
+        loadPaths: ['src/_includes']
+      }).css
+    };
   });
 
   eleventyConfig.addPlugin(EleventyI18nPlugin, {
@@ -37,9 +40,7 @@ module.exports = function (eleventyConfig) {
         return content;
       }
 
-      const { html } = await posthtml().use(minifyClassnames({genNameId: false})).process(content);
-
-      let minified = htmlmin.minify(html, {
+      let minified = await htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true,
