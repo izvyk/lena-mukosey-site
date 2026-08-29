@@ -60,5 +60,106 @@
     {% block footer %}
         {% include 'default-footer.njk' %}
     {% endblock footer %}
+
+    <script>
+        (function () {
+            var currentAnchor = null;
+            var scheduled = false;
+            var switching = false;
+
+            function updateFooterYear() {
+                var year = document.querySelector('.current-year');
+                if (year) year.textContent = new Date().getFullYear();
+            }
+
+            function updateAnchor() {
+                var works = document.querySelectorAll('main > div[id]');
+                var anchor = null;
+
+                for (var i = 0; i < works.length; i++) {
+                    if (works[i].getBoundingClientRect().top <= window.innerHeight / 2) anchor = works[i];
+                    else break;
+                }
+
+                var id = anchor && anchor.id;
+                if (id === currentAnchor) return;
+
+                currentAnchor = id;
+                // replaceState keeps the shareable link without adding history entries.
+                history.replaceState(null, '', id ? '#' + id : location.pathname + location.search);
+            }
+
+            function swapLanguage(url, addToHistory) {
+                var scrollY = window.scrollY;
+
+                return fetch(url)
+                    .then(function (response) {
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        return response.text();
+                    })
+                    .then(function (html) {
+                        var doc = new DOMParser().parseFromString(html, 'text/html');
+
+                        var replacements = ['header', 'main', 'footer'].map(function (selector) {
+                            var current = document.body.querySelector(selector);
+                            var next = doc.body.querySelector(selector);
+
+                            if (!current || !next) throw new Error('Missing ' + selector);
+                            return [current, document.importNode(next, true)];
+                        });
+
+                        document.title = doc.title;
+                        document.documentElement.lang = doc.documentElement.lang;
+
+                        // The two language pages share CSS and structure, so only replace their content regions.
+                        replacements.forEach(function (replacement) {
+                            replacement[0].replaceWith(replacement[1]);
+                        });
+
+                        updateFooterYear();
+                        window.scrollTo(0, scrollY);
+
+                        if (addToHistory) history.pushState(null, '', url);
+
+                        currentAnchor = null;
+                        updateAnchor();
+                    });
+            }
+
+            updateFooterYear();
+
+            window.addEventListener('scroll', function () {
+                if (scheduled) return;
+                scheduled = true;
+                requestAnimationFrame(function () {
+                    scheduled = false;
+                    updateAnchor();
+                });
+            }, { passive: true });
+
+            window.switchLanguage = function (link, event) {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
+                event.preventDefault();
+                if (switching) return;
+                switching = true;
+                var url = link.href.split('#')[0] + location.hash;
+
+                swapLanguage(url, true).catch(function (error) {
+                    console.error('Language switch failed:', error);
+                    location.href = url;
+                }).then(function () {
+                    switching = false;
+                });
+            };
+
+            window.addEventListener('popstate', function () {
+                swapLanguage(location.href, false).catch(function (error) {
+                    console.error('History navigation failed:', error);
+                    location.reload();
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

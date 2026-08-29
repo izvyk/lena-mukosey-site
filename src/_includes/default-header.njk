@@ -9,7 +9,7 @@
             lang="{{ link.lang }}"
             hreflang="{{ link.lang }}"
             title="{{ link.label }}"
-            onclick="window.location='{{ link.url }}' + window.location.hash; event.preventDefault();"
+            onclick="switchLanguage(this, event)"
             >{% include "../assets-inline/svg/globe-language.svg" %}</a>
     {% endfor %}
 </header>
