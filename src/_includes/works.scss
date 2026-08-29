@@ -105,13 +105,16 @@ main {
         min-width: fit-content;
 
         position: relative;
+        background-color: var.$defaultDarkerBackgroundColor;
         .trueImage {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
-            background-color: var.$defaultDarkerBackgroundColor;
+
+            transition: opacity var.$defaultAnimationDuration ease-in;
+            opacity: 0; // fades in over the grey placeholder
         }
 
         .placeholder {

@@ -130,7 +130,8 @@ module.exports = function (eleventyConfig) {
               alt="${alt}"
               ${lazy === true ? 'loading="lazy"' : ""}
               decoding="async"
-              itemprop="image">
+              itemprop="image"
+              onload="this.style.opacity = 1">
           </picture>
         <img
           class="placeholder"
