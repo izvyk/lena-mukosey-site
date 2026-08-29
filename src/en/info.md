@@ -5,7 +5,7 @@ layout: 'info.njk'
 avatarPhoto: 'lena-mukosey-avatar.jpg'
 avatarPhotoAlt: 'Lena Mukosey'
 social: [
-    {name: '', target_blank: true, text: '@lena_mukosey', link: 'https://instagram.com/duck_lusha'}, #instagram
+    {name: '', target_blank: true, text: '@duck_lusha', link: 'https://instagram.com/duck_lusha'}, #instagram
     # {name: 'E-mail', target_blank: true, text: 'example@domain.com', link: 'https://mailto:example@domain.com'},
     # {name: 'Telegram', target_blank: true, text: '@nickname', link: 'https://t.me/nickname'},
     # {name: 'WhatsApp', target_blank: true, text: '+7 (999) 123-45-67', link: 'https://wa.me/+79991234567'},
