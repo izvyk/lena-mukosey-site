@@ -2,12 +2,18 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { test } = require('node:test');
-const matter = require('gray-matter');
+const { parse: parseYaml } = require('yaml');
 
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
-const parseYaml = text => matter(`---\n${text}\n---`).data;
 const config = parseYaml(read('src/admin/config.yml'));
+
+function parseFrontmatter(text) {
+  // Match Sveltia's normalization and frontmatter extraction before YAML parsing.
+  const match = text.trim().replace(/\r\n?/g, '\n').match(/^---\n(?:(?<head>[\s\S]*?)\n)?---(?:\n(?<body>[\s\S]*))?$/s);
+  assert.ok(match, 'Expected YAML frontmatter');
+  return parseYaml(match.groups.head || '');
+}
 
 function checkFields(data, fields, location) {
   for (const key of Object.keys(data)) {
@@ -46,7 +52,7 @@ function checkImage(value) {
   assert.ok(fs.existsSync(path.join(root, config.media_folder, value)), `Missing source image: ${value}`);
 }
 
-test('CMS maps every artwork field without changing the content model', () => {
+test('every artwork parses with Sveltia-compatible YAML and maps to CMS fields', () => {
   const works = config.collections.find(collection => collection.name === 'works');
   const files = fs.readdirSync(path.join(root, works.folder)).filter(file => file.endsWith('.md'));
   assert.ok(files.length > 0);
@@ -60,7 +66,7 @@ test('CMS maps every artwork field without changing the content model', () => {
   }
   assert.equal(works.format, 'frontmatter');
   for (const file of files) {
-    const { data } = matter(read(`${works.folder}/${file}`));
+    const data = parseFrontmatter(read(`${works.folder}/${file}`));
     checkFields(data, works.fields, file);
   }
 });
@@ -70,7 +76,7 @@ test('CMS maps both biographies, contact links and all page frontmatter', () => 
   const files = config.collections.flatMap(collection => collection.files || []);
   assert.equal(files.length, 6);
   for (const file of files) {
-    checkFields(matter(read(file.file)).data, file.fields, file.file);
+    checkFields(parseFrontmatter(read(file.file)), file.fields, file.file);
   }
 });
 
