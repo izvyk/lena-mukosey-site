@@ -29,6 +29,10 @@
           <link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url }}">
         {% endfor %}
 
+        <script>
+            {% include "../assets-inline/script/lang-redirect.js" %}
+        </script>
+
         {% if scss is defined %}
             {# <link rel="stylesheet" type="text/css" href="{{ style | prefixWithStylesPath | rev }}"> #}
             <style>
@@ -143,6 +147,7 @@
                 event.preventDefault();
                 if (switching) return;
                 switching = true;
+                try { localStorage.setItem('langChoice', 'manual'); } catch (e) {}
                 var url = link.href.split('#')[0] + location.hash;
 
                 swapLanguage(url, true).catch(function (error) {
