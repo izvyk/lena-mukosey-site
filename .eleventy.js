@@ -187,6 +187,11 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addPassthroughCopy('./src/assets/favicon/');
+  eleventyConfig.addPassthroughCopy('./src/admin/');
+  eleventyConfig.ignores.add('src/admin/**');
+  eleventyConfig.ignores.add('src/404.html');
+  eleventyConfig.addPassthroughCopy('./src/_headers');
+  eleventyConfig.addPassthroughCopy('./src/404.html');
 
   return {
     dir: {

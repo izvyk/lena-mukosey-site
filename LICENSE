@@ -1,0 +1,53 @@
+# License & Copyright Notice
+
+## 1. Artwork, images, and personal content — All Rights Reserved
+
+Copyright © Lena Mukosey. All Rights Reserved.
+
+Original artwork and artist-owned photographs, images, and personal or
+biographical text in this repository are reserved content, not MIT-licensed
+software. This includes artwork and photographs in src/assets/images/, artwork
+content in src/works/*.md, and personal and biographical content in src/ru/ and
+src/en/, as well as copies of that content in the generated website. Original
+artwork and personal content remain reserved wherever else they appear in the
+repository, including when embedded in templates or data files.
+
+Except as permitted by applicable law or with explicit written permission from
+the relevant rights holder, this content may not be reproduced, distributed,
+modified, or used for commercial, non-commercial, or AI-training purposes.
+Permission to view the published portfolio does not grant permission to reuse
+its artwork or personal content.
+
+Rights in third-party materials, including photographs or text owned by other
+contributors, remain with their respective rights holders. This notice does
+not claim ownership of those materials or override their applicable licenses.
+
+## 2. Website source code — MIT License
+
+The underlying website source code, including Eleventy templates, layout and
+style code, scripts, configuration, and tests, is licensed under the MIT
+License below. The reserved content described above is explicitly excluded,
+even when contained within a source-code file. Third-party software and assets
+remain subject to their own licenses and copyright notices.
+
+MIT License
+
+Copyright © Philipp Mukosey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

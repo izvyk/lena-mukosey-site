@@ -1,0 +1,178 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+backend:
+  name: github
+  repo: izvyk/lena-mukosey-site
+  branch: master
+  # Until the OAuth Worker is configured, use local editing or a GitHub token.
+  auth_methods: [token]
+  # For artist-friendly GitHub sign-in, see README.md, then set:
+  # base_url: https://YOUR-SVELTIA-AUTH-WORKER.workers.dev
+  # auth_methods: [oauth]
+
+site_url: https://lena.mukosey.de
+
+# Global asset library paths. Filename-only values need collection overrides:
+# an empty global public_folder is ignored by Sveltia.
+media_folder: src/assets/images
+public_folder: /assets/images
+media_libraries:
+  default:
+    config:
+      # Sveltia checks this limit AFTER optimization, not against the original.
+      max_file_size: 15728640
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 90
+          width: 3291
+          height: 3291
+
+collections:
+  - name: works
+    label: Artworks / Работы
+    label_singular: Artwork / Работа
+    folder: src/works
+    # Shortcodes prepend this source path; save only the relative filename.
+    media_folder: /src/assets/images
+    public_folder: ''
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title.ru
+    slug: '{{title.en}}'
+    summary: '{{title.ru}} / {{title.en}} ({{dateEnd}})'
+    thumbnail: images.0
+    editor:
+      preview: false
+    fields:
+      - name: title
+        label: Title / Название
+        widget: object
+        fields:
+          - { name: ru, label: Русский, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: images
+        label: Images / Изображения
+        widget: list
+        min: 1
+        hint: 'First image = thumbnail. Drag to reorder. Uploads are optimized automatically; keep archival originals separately. TIFF is not supported.'
+        field:
+          name: image
+          label: Image
+          widget: image
+          choose_url: false
+          accept: image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif
+      - name: dateEnd
+        label: Completion year / Год завершения
+        widget: number
+        value_type: int
+        min: 1
+        max: 9999
+      - name: dateStart
+        label: Start year / Год начала
+        widget: number
+        value_type: int
+        min: 1
+        max: 9999
+        required: false
+        hint: Leave empty for a work made in a single year.
+      - name: extra
+        label: Materials / Материалы
+        widget: object
+        fields:
+          - { name: ru, label: Русский, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: size
+        label: Size / Размер
+        widget: string
+        hint: 'For example: A3 or 62×59 cm. Use mm, cm or m for translated units.'
+      - name: text
+        label: Description / Описание
+        widget: object
+        required: false
+        fields:
+          - { name: ru, label: Русский, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+      - name: display
+        label: Show on site / Показывать на сайте
+        widget: boolean
+        default: true
+        required: false
+        hint: Hides the work from both galleries; this is not a privacy control.
+      - name: order
+        label: Position override / Позиция
+        widget: number
+        value_type: int
+        required: false
+        hint: 'Normally newest first. Leave empty for automatic ordering; 1 = first, 2 = second, -1 = last.'
+
+  - name: biography
+    label: Biography & contacts / Био и контакты
+    media_folder: /src/assets/images
+    public_folder: ''
+    editor:
+      preview: false
+    files:
+      - name: bio_ru
+        label: Русский
+        file: src/ru/info.md
+        fields: &bio_fields
+          - { name: title, label: Browser page title / Заголовок вкладки, widget: string }
+          - { name: layout, widget: hidden, default: info.njk }
+          - name: avatarPhoto
+            label: Portrait / Фото
+            widget: image
+            choose_url: false
+            accept: image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif
+          - { name: avatarPhotoAlt, label: Portrait description / Описание фото, widget: string }
+          - name: text
+            label: Biography / Биография
+            widget: text
+            hint: Plain text, not Markdown. Edit each language separately.
+          - name: social
+            label: Contact links / Контакты
+            widget: list
+            required: false
+            summary: '{{fields.text}}'
+            fields:
+              - { name: name, label: Label / Подпись, widget: string, required: false }
+              - { name: text, label: Link text / Текст ссылки, widget: string }
+              - name: link
+                label: Link / Ссылка
+                widget: string
+                pattern: ['^(https?://|mailto:|tel:).+', 'Use https://, mailto: or tel:']
+              - { name: target_blank, label: Open in new tab / Открывать в новой вкладке, widget: boolean, default: true, required: false }
+      - name: bio_en
+        label: English
+        file: src/en/info.md
+        fields: *bio_fields
+
+  - name: pages
+    label: Page titles / Заголовки страниц
+    editor:
+      preview: false
+    files:
+      - name: gallery_ru
+        label: Галерея — русский
+        file: src/ru/index.md
+        fields:
+          - { name: title, label: Заголовок вкладки, widget: string }
+          - { name: layout, widget: hidden, default: index.njk }
+          - { name: permalink, widget: hidden, default: / }
+      - name: gallery_en
+        label: Gallery — English
+        file: src/en/index.md
+        fields:
+          - { name: title, label: Browser page title, widget: string }
+          - { name: layout, widget: hidden, default: index.njk }
+      - name: works_ru
+        label: Работы — русский
+        file: src/ru/works.md
+        fields: &works_page_fields
+          - { name: title, label: Browser page title / Заголовок вкладки, widget: string }
+          - { name: layout, widget: hidden, default: works.njk }
+      - name: works_en
+        label: Works — English
+        file: src/en/works.md
+        fields: *works_page_fields
