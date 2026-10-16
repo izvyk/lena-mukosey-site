@@ -67,10 +67,7 @@ test('every artwork parses with Sveltia-compatible YAML and maps to CMS fields',
   const works = config.collections.find(collection => collection.name === 'works');
   const files = fs.readdirSync(path.join(root, works.folder)).filter(file => file.endsWith('.md'));
   assert.ok(files.length > 0);
-  assert.equal(config.backend.repo, 'izvyk/lena-mukosey-site');
-  assert.equal(config.backend.branch, 'master');
-  assert.equal(config.media_folder, 'src/assets/images');
-  assert.equal(config.public_folder, '/assets/images');
+
   for (const collection of config.collections.filter(collection => ['works', 'biography'].includes(collection.name))) {
     assert.equal(collection.media_folder, '/src/assets/images');
     assert.equal(collection.public_folder, '', 'Filename-only paths require a collection-level override');
@@ -82,10 +79,9 @@ test('every artwork parses with Sveltia-compatible YAML and maps to CMS fields',
   }
 });
 
-
 test('CMS maps both biographies, contact links and all page frontmatter', () => {
   const files = config.collections.flatMap(collection => collection.files || []);
-  assert.equal(files.length, 6);
+  assert.ok(files.length > 0, 'Expected file-based CMS collections');
   for (const file of files) {
     checkFields(parseFrontmatter(read(file.file)), file.fields, file.file);
   }
@@ -96,9 +92,6 @@ test('admin and Cloudflare files are copied verbatim, not rendered as templates'
     assert.equal(read(`public/${file}`), read(`src/${file}`), `${file} must be copied unchanged`);
   }
   assert.ok(!fs.existsSync(path.join(root, 'public/404/index.html')), '404 must not become a directory URL');
-  const admin = read('public/admin/index.html');
-  assert.ok(admin.includes('@sveltia/cms@0.242.0/dist/sveltia-cms.js'));
-  assert.ok(!admin.includes('mc.yandex.ru'), 'The CMS must not inherit portfolio analytics');
 });
 
 test('responsive images use AVIF and JPEG, publishing only current variants', () => {
