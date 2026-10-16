@@ -16,7 +16,7 @@ npm test      # build and CMS integration checks
 
 For local CMS editing, open `/admin/index.html` in Chrome/Edge, choose **Work with Local Repository**, and select the repository root. No authentication is needed; saves modify local files.
 
-Cold builds generate responsive AVIF/JPEG images and can take more than ten minutes. Keep `public/` between local builds to reuse generated images.
+Builds generate responsive AVIF (quality 65, effort 4) and JPEG fallback images. Derivatives are cached in `.cache/images/`, separately from `public/`; only images used by the current build are published. Source bytes, image settings and dependency versions determine reuse. Deleting the cache is safe, but makes the next build slower.
 
 ## Content and images
 
@@ -26,19 +26,17 @@ Images live in `src/assets/images/`; frontmatter stores filenames, not public UR
 
 ## Cloudflare Pages
 
-Connect this GitHub repository to a **Pages** project:
+Use the existing Git-integrated **Pages** project with native Cloudflare builds:
 
-| Setting | Value |
-| --- | --- |
-| Production branch | `master` |
-| Root directory | Repository root |
-| Build command | `npm run build` |
-| Output directory | `public` |
-| Node version | `24` (specified in `.node-version`) |
+- Framework preset: **Eleventy**; production branch: `master`; root directory: repository root (blank).
+- Build command: `npm test`; output directory: `public`; Node.js: `24` (specified in `.node-version`).
+- Build system: **Version 3**; **build cache enabled**; automatic production deployments **enabled**.
 
-Keep dependency installation enabled, including dev dependencies. Do not set `dev` in the build environment. Add `lena.mukosey.de` under **Pages → Custom domains** so Cloudflare configures DNS and HTTPS.
+Keep dependency installation enabled, including dev dependencies, and do not set `dev` in the build environment. Keep `lena.mukosey.de` under the project's custom domains. No GitHub Actions workflow, Wrangler, or deployment API token is needed.
 
-CMS saves commit directly to `master` and trigger deployment. Editors need write access, and branch rules must permit these commits. Changes become public after a successful build.
+Pages caches Eleventy's `.cache/` directory, including our generated images. The first build populates the cache; check a second build's logs to confirm restoration. Cache storage is limited to 10 GB per project and entries expire after seven days without access. A cache miss is safe but regenerates the images and can take several minutes. Cloudflare's CDN cache is separate and serves the finished files to visitors.
+
+CMS saves commit directly to `master` and trigger Pages deployment. Editors need write access, and branch rules must permit these commits. Changes become public after a successful build and test run.
 
 ## GitHub sign-in
 

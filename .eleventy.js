@@ -1,4 +1,7 @@
 const Image = require("@11ty/eleventy-img").default;
+const fs = require('node:fs');
+const path = require('node:path');
+const { createHash } = require('node:crypto');
 const htmlmin = require("html-minifier-terser");
 const sass = require('sass');
 const { EleventyI18nPlugin } = require("@11ty/eleventy");
@@ -7,6 +10,35 @@ const i18n = require('eleventy-plugin-i18n');
 const translations = require('./src/_data/i18n/');
 
 module.exports = function (eleventyConfig) {
+  // Separate encoder versions in the disk cache; Image hashes source bytes and settings.
+  const dependencyHash = createHash('sha256').update(fs.readFileSync('package-lock.json')).digest('hex').slice(0, 12);
+  const imageFiles = new Map();
+  eleventyConfig.on('eleventy.before', () => imageFiles.clear());
+  eleventyConfig.on('eleventy.after', ({ incremental }) => {
+    const outputDir = 'public/assets/images';
+    // Partial development builds must retain images used by untouched pages.
+    if (!incremental) fs.rmSync(outputDir, { recursive: true, force: true });
+    fs.mkdirSync(outputDir, { recursive: true });
+    for (const [filename, source] of imageFiles) {
+      fs.copyFileSync(source, path.join(outputDir, filename));
+    }
+  });
+
+  async function responsiveImage(src, widths) {
+    const metadata = await Image('./src/assets/images/' + src, {
+      widths,
+      formats: ['avif', 'jpeg'],
+      sharpAvifOptions: { quality: 65, effort: 4 },
+      outputDir: `.cache/images/${dependencyHash}`,
+      urlPath: '/assets/images',
+      svgShortCircuit: true,
+    });
+    for (const image of Object.values(metadata).flat()) {
+      imageFiles.set(image.filename, image.outputPath);
+    }
+    return metadata;
+  }
+
   // Replacement for the unpublished eleventy-plugin-inline-sass:
   // compiles companion .scss data files and exposes them as the `scss` key.
   eleventyConfig.addDataExtension('scss', contents => {
@@ -58,13 +90,7 @@ module.exports = function (eleventyConfig) {
 		// 	throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
 		// }
 
-		let metadata = await Image("./src/assets/images/" + src, {
-			widths,
-			formats: ['avif', 'jpeg'],
-      outputDir: 'public/assets/images',
-      urlPath: '/assets/images',
-      svgShortCircuit: true,
-		});
+    let metadata = await responsiveImage(src, widths);
 
 		let lowsrc = metadata.jpeg[0];
 		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
@@ -107,13 +133,7 @@ module.exports = function (eleventyConfig) {
         ;
     }
 
-		let metadata = await Image("./src/assets/images/" + src, {
-			widths,
-			formats: ['avif', 'jpeg'],
-      outputDir: 'public/assets/images',
-      urlPath: '/assets/images',
-      svgShortCircuit: true,
-		});
+    let metadata = await responsiveImage(src, widths);
 
 		let lowsrc = metadata.jpeg[0];
 		let highsrc = metadata.jpeg[metadata.jpeg.length - 1];

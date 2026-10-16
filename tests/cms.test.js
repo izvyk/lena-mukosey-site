@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { test } = require('node:test');
+const { createHash } = require('node:crypto');
 const { parse: parseYaml } = require('yaml');
 
 const root = path.resolve(__dirname, '..');
@@ -88,6 +89,27 @@ test('admin and Cloudflare files are copied verbatim, not rendered as templates'
   const admin = read('public/admin/index.html');
   assert.ok(admin.includes('@sveltia/cms@0.242.0/dist/sveltia-cms.js'));
   assert.ok(!admin.includes('mc.yandex.ru'), 'The CMS must not inherit portfolio analytics');
+});
+
+test('responsive images use AVIF and JPEG, publishing only current variants', () => {
+  const referenced = new Set();
+  for (const file of ['index.html', 'info/index.html', 'works/index.html', 'en/index.html', 'en/info/index.html', 'en/works/index.html']) {
+    const html = read(`public/${file}`);
+    assert.ok(html.includes('image/avif'), `${file}: missing AVIF sources`);
+    assert.ok(html.includes('image/jpeg'), `${file}: missing JPEG fallback`);
+    assert.ok(!html.includes('image/webp'), `${file}: unexpected WebP source`);
+    for (const match of html.matchAll(/\/assets\/images\/([\w-]+\.(?:avif|jpeg))/g)) {
+      referenced.add(match[1]);
+    }
+  }
+  assert.ok(referenced.size > 0);
+  const published = fs.readdirSync(path.join(root, 'public/assets/images'));
+  assert.deepEqual(new Set(published), referenced, 'Missing variants or stale images in deployment');
+  const dependencyHash = createHash('sha256').update(read('package-lock.json')).digest('hex').slice(0, 12);
+  for (const file of published) {
+    const cached = path.join(root, '.cache/images', dependencyHash, file);
+    assert.deepEqual(fs.readFileSync(cached), fs.readFileSync(path.join(root, 'public/assets/images', file)), `${file}: published variant must match the persistent build cache`);
+  }
 });
 
 test('all portfolio routes are built and the output fits Cloudflare Pages limits', () => {
