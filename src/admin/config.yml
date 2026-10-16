@@ -9,7 +9,7 @@ backend:
   # base_url: https://YOUR-SVELTIA-AUTH-WORKER.workers.dev
   # auth_methods: [oauth]
 
-site_url: https://lena.mukosey.de
+site_url: https://lena.mukosey.com
 
 # Global asset library paths. Filename-only values need collection overrides:
 # an empty global public_folder is ignored by Sveltia.

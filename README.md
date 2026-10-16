@@ -34,7 +34,7 @@ Use the existing Git-integrated **Pages** project with native Cloudflare builds:
 - Build command: `npm test`; output directory: `public`; Node.js: `24` (specified in `.node-version`).
 - Build system: **Version 3**; **build cache enabled**; automatic production deployments **enabled**.
 
-Keep dependency installation enabled, including dev dependencies, and do not set `dev` in the build environment. Keep `lena.mukosey.de` under the project's custom domains. No GitHub Actions workflow, Wrangler, or deployment API token is needed.
+Keep dependency installation enabled, including dev dependencies, and do not set `dev` in the build environment. Keep `lena.mukosey.com` under the project's custom domains. No GitHub Actions workflow, Wrangler, or deployment API token is needed.
 
 Pages caches Eleventy's `.cache/` directory, including our generated images. The first build populates the cache; check a second build's logs to confirm restoration. Cache storage is limited to 10 GB per project and entries expire after seven days without access. A cache miss is safe but regenerates the images and can take several minutes. Cloudflare's CDN cache is separate and serves the finished files to visitors.
 
@@ -45,7 +45,7 @@ CMS saves commit directly to `master` and trigger Pages deployment. Editors need
 Token login is enabled until OAuth is configured. For the artist's normal sign-in:
 
 1. Deploy the official [Sveltia CMS Authenticator](https://github.com/sveltia/sveltia-cms-auth) to Cloudflare Workers.
-2. [Register a GitHub OAuth app](https://github.com/settings/applications/new) with homepage `https://lena.mukosey.de` and callback `<WORKER_URL>/callback`.
-3. Set the Worker's `GITHUB_CLIENT_ID`, encrypted `GITHUB_CLIENT_SECRET`, and `ALLOWED_DOMAINS=lena.mukosey.de`. Add the actual Pages hostname only if login should also work there. Never commit secrets.
+2. [Register a GitHub OAuth app](https://github.com/settings/applications/new) with homepage `https://lena.mukosey.com` and callback `<WORKER_URL>/callback`.
+3. Set the Worker's `GITHUB_CLIENT_ID`, encrypted `GITHUB_CLIENT_SECRET`, and `ALLOWED_DOMAINS=lena.mukosey.com`. Add the actual Pages hostname only if login should also work there. Never commit secrets.
 4. In `src/admin/config.yml`, set `backend.base_url` to the Worker URL and change `auth_methods` to `[oauth]`. Commit and redeploy.
 5. Give the artist's own GitHub account write access, then test sign-in and a small edit at `/admin/`.
