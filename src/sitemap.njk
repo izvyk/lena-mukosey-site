@@ -1,0 +1,31 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+routes: ['/', '/info/', '/works/']
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{% for route in routes %}
+  {% for prefix in ['', '/en'] %}
+  <url>
+    <loc>{{ site.url }}{{ prefix }}{{ route }}</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="{{ site.url }}{{ route }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/en{{ route }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/en{{ route }}"/>
+  </url>
+  {% endfor %}
+{% endfor %}
+{% asyncEach work in collections.worksSortedRespectingOrder %}
+  {% asyncEach prefix in ['', '/en'] %}
+  <url>
+    <loc>{{ site.url }}{{ prefix }}/works/{{ work.data.slug }}/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="{{ site.url }}/works/{{ work.data.slug }}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/en/works/{{ work.data.slug }}/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/en/works/{{ work.data.slug }}/"/>
+    {% asyncEach image in work.data.images %}
+    <image:image><image:loc>{{ site.url }}{% workImageUrl image %}</image:loc></image:image>
+    {% endeach %}
+  </url>
+  {% endeach %}
+{% endeach %}
+</urlset>

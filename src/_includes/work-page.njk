@@ -1,0 +1,17 @@
+---
+layout: 'base.njk'
+---
+
+{% set eagerWork = true %}
+{% include "work.njk" %}
+
+{# Replaced by the full list when JS is on; crawlers and visitors without JS browse with these links. #}
+<nav class="workNav">
+    {% if pagination.href.previous %}
+        <a href="{{ pagination.href.previous }}">← {{ pagination.page.previous.data.title[page.lang] }}</a>
+    {% endif %}
+    <a href="{{ "/works/" | locale_url }}#{{ work.data.slug }}">{{ 'gallery.all' | i18n }}</a>
+    {% if pagination.href.next %}
+        <a href="{{ pagination.href.next }}">{{ pagination.page.next.data.title[page.lang] }} →</a>
+    {% endif %}
+</nav>

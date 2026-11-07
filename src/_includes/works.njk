@@ -3,56 +3,8 @@ layout: 'base.njk'
 ---
 
 {% asyncEach work in collections.worksSortedRespectingOrder %}
-    <div id="{{ work.data.title['en'] | slugify }}">
-        <div class="workContainer" tabindex="0" itemscope itemtype="https://schema.org/CreativeWork">
-            <div class="imagesContainer" tabindex="-1">
-                {% asyncEach image in work.data.images %}
-                    {% if work.data.images | length > 1 %}
-                        {% set annotation = loop.index + ' / ' + (work.data.images | length) %}
-                    {% endif %}
-
-                    {% imageWithPlaceholder image,
-                        "",
-                        [285, 570, 855, 1097, 2194, 3291],
-                        "(max-width: 650px) 100vw, calc(100vw - 28ch - 3 * 20px)",
-                        true,
-                        annotation,
-                        not loop.first,
-                        not loop.last
-                    %}
-                {% endeach %}
-            </div>
-            <div class="workInfo">
-                <div class="workDescription desktop" itemprop="description">
-                    {% if work.data.images | length > 1 %}
-                        {{ 'series_length' | i18n({ number: work.data.images | length }) }}
-                        <br>
-                    {% endif %}
-                        
-                    {{ work.data.text[page.lang] }}
-                </div>
-                <div class="short">
-                    <div class="title">
-                        <span class="name" itemprop="name">{{ work.data.title[page.lang] }}</span>,
-                        <span class="nowrap">
-                            {% if work.data.dateStart %}
-                                {{ work.data.dateStart }} – 
-                                {# en dash is used for dates (U+2013) #}
-                            {% endif %}
-                            <span itemprop="dateCreated">{{ work.data.dateEnd }}</span>
-                        </span>
-                    </div>
-                    <div class="extra">
-                        <span itemprop="material">{{ work.data.extra[page.lang] }}</span>,
-                        <span itemprop="size">{{ work.data.size | size_i18n(page.lang, work.inputPath) }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="workDescription mobile" itemprop="description">
-                {{ work.data.text[page.lang] }}
-            </div>
-        </div>
-    </div>
+    {% set eagerWork = loop.first %}
+    {% include "work.njk" %}
 {% endeach %}
 
 {# itemprop="dateCreated" #}

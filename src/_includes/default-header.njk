@@ -1,15 +1,14 @@
 <header {% if '/info' not in page.url %}itemscope itemtype="https://schema.org/Person"{% endif %}>
-    <a class="name" href="{{ "/" | locale_url }}"><span itemprop="name">{{ 'header.name' | i18n }}</span></a>
-    <a class="headerbutton" href="{{ "/info/" | locale_url }}" itemprop="sameAs">
+    <h1><a class="name" href="{{ "/" | locale_url }}"><span itemprop="name">{{ 'header.name' | i18n }}</span></a></h1>
+    <a class="headerbutton" href="{{ "/info/" | locale_url }}" itemprop="url" title="{{ 'header.info' | i18n }}">
         {% include "../assets-inline/svg/info-icon.svg" %}
     </a>
-    {% for link in page.url | locale_links %}
-        <a class="headerbutton"
-            href="{{ link.url }}"
-            lang="{{ link.lang }}"
-            hreflang="{{ link.lang }}"
-            title="{{ link.label }}"
-            onclick="switchLanguage(this, event)"
-            >{% include "../assets-inline/svg/globe-language.svg" %}</a>
-    {% endfor %}
+    {% set otherLanguage = page.url | other_language %}
+    <a class="headerbutton"
+        href="{{ otherLanguage.url }}"
+        lang="{{ otherLanguage.lang }}"
+        hreflang="{{ otherLanguage.lang }}"
+        title="{{ otherLanguage.label }}"
+        onclick="switchLanguage(this, event)"
+        >{% include "../assets-inline/svg/globe-language.svg" %}</a>
 </header>

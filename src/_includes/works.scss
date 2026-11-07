@@ -18,8 +18,8 @@ $imagesContainerHeightDesktopSVH: calc(100svh - 2 * var.$defaultGap);
 $worksGap: var.$defaultGap;
 
 $imageCounterButtonBorderRadius: 3px;
-$imageCounterButtonPadding: 3px;
-$imageCounterArrowBorderSize: .55em;
+$imageCounterButtonSize: 28px;
+$imageCounterArrowBorderSize: 8px;
 
 main {
     margin-top: calc(-1 * var.$defaultGap);
@@ -133,12 +133,12 @@ main {
 
             display: flex;
             align-items: center;
-            gap: .5em;
 
             opacity: .7;
             transition: var.$defaultAnimationDuration opacity;
 
-            &:hover {
+            &:hover,
+            &:has(:focus-visible) {
                 opacity: 1;
             }
 
@@ -149,7 +149,18 @@ main {
             border-radius: $imageCounterButtonBorderRadius;
 
             .imageCounterButton {
-                padding: $imageCounterButtonPadding;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: $imageCounterButtonSize;
+                height: $imageCounterButtonSize;
+                padding: 0;
+                background: none;
+                border: none;
+
+                &:focus-visible {
+                    outline: var.$focusOutline;
+                }
 
                 &:not(:has(.inactive)) {
                     pointer-events: all;
@@ -166,6 +177,7 @@ main {
             }
 
             .arrow {
+                display: block;
                 width: 0;
                 height: 0;
                 border-radius: 0;
@@ -205,6 +217,14 @@ main {
     }
 }
 
+.workNav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: calc(var.$defaultGap / 2) var.$defaultGap;
+    padding: var.$defaultGap;
+}
+
 .workContainer {
     padding-top: $worksGap;
     outline: none;
@@ -230,13 +250,6 @@ main {
 
     main {
         margin-top: calc(-1 * header.$height);
-    }
-
-    footer {
-        #text {
-            margin-inline: var.$defaultGap;
-            text-align: start;
-        }
     }
 
     .workContainer {

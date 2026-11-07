@@ -1,6 +1,11 @@
+/assets/images/*
+  Cache-Control: public, max-age=604800
+
 /admin
   Cache-Control: no-store
   X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
 
 /admin/*
   Cache-Control: no-store

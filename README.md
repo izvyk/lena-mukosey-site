@@ -1,6 +1,8 @@
 # Lena Mukosey portfolio
 
-Bilingual Eleventy portfolio for `https://lena.mukosey.de`, with Sveltia CMS at `/admin/`.
+Bilingual Eleventy portfolio served on `lena.mukosey.com` and `lena.mukosey.ru`, with Sveltia CMS at `/admin/`. Canonical, link preview and sitemap URLs use the single address in `src/_data/site.json`; `lena.mukosey.de` is a private Cloudflare Pages test deployment.
+
+Each artwork has its own page at `/works/<slug>/` and `/en/works/<slug>/`, used by search results and shared links. The slug comes from the English title, so renaming a work changes its URL.
 Artwork and personal content are all rights reserved; website code is MIT-licensed. See [LICENSE](LICENSE).
 
 ## Development

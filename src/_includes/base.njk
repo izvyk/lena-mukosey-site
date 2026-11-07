@@ -3,17 +3,37 @@
 <head>
     {% block head %}
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="robots" content="index,follow">
         <meta name="googlebot" content="index,follow">
 
+        {% if work %}
+            {% set pageTitle = work.data.title[page.lang] ~ ' — ' ~ ('meta.author' | i18n) %}
+            {% set pageDescription = work.data.extra[page.lang] ~ ', ' ~ (work.data.size | size_i18n(page.lang, work.inputPath)) %}
+            {% if work.data.text[page.lang] %}
+                {% set pageDescription = pageDescription ~ '. ' ~ work.data.text[page.lang] %}
+            {% endif %}
+        {% else %}
+            {% set pageTitle = title %}
+            {% set pageDescription = 'meta.description' | i18n %}
+        {% endif %}
+
         <meta name="author" content="{{ 'meta.author' | i18n }}">
-        <meta name="description" content="{{ 'meta.description' | i18n }}">
-        <meta name="copyright" content="Copyright 2014 – current Lena Mukosey. При цитировании ссылка (гиперссылка) на источник обязательна. Все логотипы и названия принадлежат их уважаемым владельцам.">
+        <meta name="description" content="{{ pageDescription }}">
+        <meta name="copyright" content="{{ 'meta.copyright' | i18n }}">
         <meta name="keywords" content="{{ 'meta.keywords' | i18n }}">
 
-        <title>{{ title }}</title>
+        <title>{{ pageTitle }}</title>
+
+        {% set previewWork = work.data or collections.worksSortedRespectingOrder[0].data %}
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ 'meta.author' | i18n }}">
+        <meta property="og:title" content="{{ pageTitle }}">
+        <meta property="og:description" content="{{ pageDescription }}">
+        <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+        <meta property="og:locale" content="{{ 'ru_RU' if page.lang == 'ru' else 'en_US' }}">
+        {% previewImage avatarPhoto or previewWork.images[0], avatarPhotoAlt or previewWork.title[page.lang] %}
+        <meta name="twitter:card" content="summary_large_image">
 
         <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date(); for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }} k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(94506450, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/94506450" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
 
@@ -24,10 +44,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;500&display=swap" rel="stylesheet">
 
-        <link rel="alternate" hreflang="{{ page.lang }}" href="{{ page.url }}">
-        {% for link in page.url | locale_links %}
-          <link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url }}">
-        {% endfor %}
+        <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+        {% set otherLanguage = page.url | other_language %}
+        <link rel="alternate" hreflang="{{ page.lang }}" href="{{ site.url }}{{ page.url }}">
+        <link rel="alternate" hreflang="{{ otherLanguage.lang }}" href="{{ site.url }}{{ otherLanguage.url }}">
+        <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.url if page.lang == 'en' else otherLanguage.url }}">
 
         <script>
             {% include "../assets-inline/script/lang-redirect.js" %}
@@ -39,16 +60,17 @@
                 {{ scss | safe }}
             </style>
         {% endif %}
-    {% endblock %}
 
-    {% if script is defined %}
-        {% set js %}
-            {% include "../assets-inline/script/" + script %}
-        {% endset %}
-        <script>
-            {{ js | safe }}
-        </script>
-    {% endif %}
+        {# Images fade in from onload and the arrows scroll by script, so without JS show the images and native scrollbars instead. #}
+        <noscript>
+            <style>
+                .card img, .imagesContainer .imageWrapper .trueImage { opacity: 1; }
+                .imagesContainer { scrollbar-width: thin; }
+                .imagesContainer .imageWrapper .imageCounter .imageCounterButton { display: none; }
+                .imagesContainer .imageWrapper .imageCounter { padding-inline: .5em; }
+            </style>
+        </noscript>
+    {% endblock %}
 </head>
 <body {% if '/info' in page.url %} itemscope itemtype="https://schema.org/Person" {% endif %}>
     {% block header %}
@@ -76,34 +98,92 @@
                 if (year) year.textContent = new Date().getFullYear();
             }
 
-            function updateAnchor() {
+            function currentWork() {
                 var works = document.querySelectorAll('main > div[id]');
                 var anchor = null;
 
+                // Near the top: an opened work must stay current even if it is short and the next one shows below it.
                 for (var i = 0; i < works.length; i++) {
-                    if (works[i].getBoundingClientRect().top <= window.innerHeight / 2) anchor = works[i];
+                    if (works[i].getBoundingClientRect().top <= window.innerHeight / 4) anchor = works[i];
                     else break;
                 }
 
+                // The last works may be too short to ever reach that line.
+                var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+                return atBottom && window.scrollY > 0 && works.length ? works[works.length - 1] : anchor;
+            }
+
+            // Placeholders set each work's height, and a new one has no size until it is decoded.
+            function whenSized(node) {
+                return Promise.all(Array.prototype.map.call(node.querySelectorAll('img.placeholder'), function (image) {
+                    return image.decode().catch(function () {});
+                }));
+            }
+
+            function updateAnchor() {
+                var anchor = currentWork();
                 var id = anchor && anchor.id;
                 if (id === currentAnchor) return;
 
                 currentAnchor = id;
+                var list = location.pathname.match(/^(\/en)?\/works\//);
+                if (!list) return;
+
+                var path = list[0] + (id ? id + '/' : '');
                 // replaceState keeps the shareable link without adding history entries.
-                history.replaceState(null, '', id ? '#' + id : location.pathname + location.search);
+                history.replaceState(null, '', path + location.search);
+
+                var languageLink = document.querySelector('header a[hreflang]');
+                if (languageLink) languageLink.setAttribute('href', list[1] ? path.slice(list[1].length) : '/en' + path);
+                if (anchor) document.title = anchor.querySelector('.title .name').textContent + ' — ' + document.querySelector('header .name').textContent;
             }
 
-            function swapLanguage(url, addToHistory) {
-                var scrollY = window.scrollY;
+            // Work pages and the list share URLs while browsing, but only the list holds every work.
+            function worksListUrl(url) {
+                return url.replace(/\/works\/[^\/?#]+\/(?=[?#]|$)/, '/works/');
+            }
 
+            function fetchDocument(url) {
                 return fetch(url)
                     .then(function (response) {
                         if (!response.ok) throw new Error('HTTP ' + response.status);
                         return response.text();
                     })
                     .then(function (html) {
-                        var doc = new DOMParser().parseFromString(html, 'text/html');
+                        return new DOMParser().parseFromString(html, 'text/html');
+                    });
+            }
 
+            // A work page holds a single work for crawlers and link previews. Grow it into the
+            // browsable list around the open work: the node is kept, so its image never reloads.
+            function expandWorkPage() {
+                var work = document.querySelector('main > div[id]');
+
+                fetchDocument(worksListUrl(location.pathname)).then(function (doc) {
+                    doc.querySelectorAll('.trueImage').forEach(function (image) {
+                        image.setAttribute('loading', 'lazy');
+                    });
+
+                    var list = document.importNode(doc.body.querySelector('main'), true);
+
+                    return whenSized(list).then(function () {
+                        var slot = list.querySelector('[id="' + work.id + '"]');
+                        if (!slot || !work.isConnected) return;
+
+                        var top = work.getBoundingClientRect().top;
+                        slot.replaceWith(work);
+                        document.querySelector('main').replaceWith(list);
+                        window.scrollBy(0, work.getBoundingClientRect().top - top);
+                    });
+                }).catch(function (error) {
+                    // The page stays complete on its own, with its navigation links.
+                    console.error('Could not load the other works:', error);
+                });
+            }
+
+            function swapLanguage(url, addToHistory) {
+                return fetchDocument(worksListUrl(url))
+                    .then(function (doc) {
                         var replacements = ['header', 'main', 'footer'].map(function (selector) {
                             var current = document.body.querySelector(selector);
                             var next = doc.body.querySelector(selector);
@@ -112,25 +192,41 @@
                             return [current, document.importNode(next, true)];
                         });
 
-                        document.title = doc.title;
-                        document.documentElement.lang = doc.documentElement.lang;
+                        return whenSized(replacements[1][1]).then(function () {
+                            var scrollY = window.scrollY;
+                            var work = currentWork();
+                            var workTop = work && work.getBoundingClientRect().top;
 
-                        // The two language pages share CSS and structure, so only replace their content regions.
-                        replacements.forEach(function (replacement) {
-                            replacement[0].replaceWith(replacement[1]);
+                            document.title = doc.title;
+                            document.documentElement.lang = doc.documentElement.lang;
+
+                            // The two language pages share CSS and structure, so only replace their content regions.
+                            replacements.forEach(function (replacement) {
+                                replacement[0].replaceWith(replacement[1]);
+                            });
+
+                            updateFooterYear();
+
+                            // Both languages use the same work ids; text wraps differently, so follow the work.
+                            var sameWork = work && document.getElementById(work.id);
+                            if (sameWork) window.scrollBy(0, sameWork.getBoundingClientRect().top - workTop);
+                            else window.scrollTo(0, scrollY);
+
+                            if (addToHistory) history.pushState(null, '', url);
+
+                            currentAnchor = null;
+                            updateAnchor();
                         });
-
-                        updateFooterYear();
-                        window.scrollTo(0, scrollY);
-
-                        if (addToHistory) history.pushState(null, '', url);
-
-                        currentAnchor = null;
-                        updateAnchor();
                     });
             }
 
             updateFooterYear();
+
+            if (document.querySelector('.workNav')) {
+                // A restored offset would point into the list the page has not grown into yet.
+                history.scrollRestoration = 'manual';
+                expandWorkPage();
+            }
 
             window.addEventListener('scroll', function () {
                 if (scheduled) return;

@@ -10,6 +10,9 @@
 		// Only Russian pages redirect; English pages are the target.
 		if (document.documentElement.lang !== 'ru') return;
 
+		// Search crawlers report an English browser, yet must be able to index Russian pages.
+		if (/bot|crawl|spider|slurp/i.test(navigator.userAgent)) return;
+
 		// Respect an explicit manual language switch.
 		if (localStorage.getItem(KEY)) return;
 
