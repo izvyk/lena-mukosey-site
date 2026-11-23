@@ -8,6 +8,7 @@
     "not_found_handling": "404-page"
   },
   // Serve only on the custom domain, which Cloudflare Access protects.
+  "observability": { "enabled": true },
   "workers_dev": false,
   "preview_urls": false,
   "routes": [{ "pattern": "lena.mukosey.de", "custom_domain": true }]
