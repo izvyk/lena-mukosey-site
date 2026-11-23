@@ -1,6 +1,6 @@
 # Lena Mukosey portfolio
 
-Bilingual Eleventy portfolio served on `lena.mukosey.com` and `lena.mukosey.ru`, with Sveltia CMS at `/admin/`. Canonical, link preview and sitemap URLs use the single address in `src/_data/site.json`; `lena.mukosey.de` is a private Cloudflare Pages test deployment.
+Bilingual Eleventy portfolio served on `lena.mukosey.com` and `lena.mukosey.ru`, with Sveltia CMS at `/admin/`. Canonical, link preview and sitemap URLs use the single address in `src/_data/site.json`; `lena.mukosey.de` is a private Cloudflare Workers test deployment behind Cloudflare Access.
 
 Each artwork has its own page at `/works/<slug>/` and `/en/works/<slug>/`, used by search results and shared links. The slug comes from the English title, so renaming a work changes its URL.
 
@@ -28,7 +28,7 @@ CMS uploads are optimized to WebP; keep archival originals separately. TIFF uplo
 
 ## Deployment
 
-Cloudflare Pages builds pushes to `master` with `npm test`, publishing `public/`. Enable the Eleventy preset and build cache to reuse `.cache/images/`; cold builds can take several minutes. Generated images stay out of Git.
+Workers Builds deploys pushes to `master`: build command `npm test`, deploy command `npx wrangler deploy`. `wrangler.jsonc` serves `public/` as static assets on `lena.mukosey.de` only (no `workers.dev` or preview URLs). Keep build cache enabled to reuse `.cache/images/`; cold builds can take several minutes. Generated images stay out of Git.
 
 ## License
 
